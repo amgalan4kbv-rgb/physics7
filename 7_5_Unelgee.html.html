@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уртыг хэмжих - Физик VII анги Интерактив сорил</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- KaTeX for Physics Equations -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #f8fafc; }
+    </style>
+</head>
+<body class="p-3 md:p-6 min-h-screen bg-slate-950">
+    <div class="max-w-5xl mx-auto bg-slate-900 rounded-3xl shadow-2xl border border-slate-800 overflow-hidden">
+        
+        <!-- HEADER -->
+        <div class="bg-gradient-to-r from-blue-950 via-indigo-900 to-slate-900 p-6 md:p-8 text-white relative border-b border-slate-800">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+                    <div class="w-16 h-16 rounded-2xl bg-indigo-500/20 border-2 border-indigo-400 flex items-center justify-center shrink-0 shadow-lg backdrop-blur-md">
+                        <i data-lucide="ruler" class="w-9 h-9 text-indigo-400"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-black text-indigo-300 tracking-tight">Уртыг хэмжих ба багажийн заалт унших</h1>
+                        <p class="text-indigo-200 text-xs md:text-sm font-medium mt-1">Интерактив диагностик сорил | 20 Даалгавар | VII Анги</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 bg-slate-950/70 p-3.5 rounded-2xl border border-slate-800 backdrop-blur-md shrink-0">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-400/40 flex items-center justify-center">
+                        <i data-lucide="award" class="w-5 h-5 text-indigo-400"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-[10px] text-slate-400 uppercase font-extrabold tracking-wider">Шүүлт ба аналитик</p>
+                        <p class="text-xs font-black text-slate-100">"Үнэлгээ" шийтэд бүртгэгдэнэ</p>
+                        <p class="text-[11px] text-indigo-400 font-semibold">Физикийн хичээл</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="p-4 md:p-8 space-y-6">
+            
+            <!-- Сурагчийн бүртгэл -->
+            <div class="p-6 bg-slate-950 rounded-2xl border-2 border-indigo-500/50 shadow-xl space-y-4">
+                <div class="flex items-center gap-2 text-indigo-400 font-extrabold text-base">
+                    <i data-lucide="user-check" class="w-5 h-5"></i>
+                    <span>Сурагчийн мэдээлэл</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-slate-300 text-xs font-bold mb-1">Овог нэр:</label>
+                        <input type="text" id="studentName" placeholder="Жишээ: А. Болд" class="w-full bg-slate-900 border border-slate-700 text-slate-100 font-semibold px-4 py-3 rounded-xl focus:outline-none focus:border-indigo-400 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 text-xs font-bold mb-1">Анги бүлэг:</label>
+                        <input type="text" id="studentClass" placeholder="Жишээ: 7А" class="w-full bg-slate-900 border border-slate-700 text-slate-100 font-semibold px-4 py-3 rounded-xl focus:outline-none focus:border-indigo-400 text-sm">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 20 даалгаврын контейнер -->
+            <div id="quiz-container" class="space-y-6"></div>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center mt-8 gap-4">
+                <button id="submitQuizBtn" onclick="calculateQuizScore()" class="w-full md:w-auto bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-600 hover:from-indigo-600 hover:to-pink-700 text-white font-black py-4 px-12 rounded-2xl shadow-xl transition-all transform active:scale-95 text-base flex items-center justify-center gap-2">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                    Үнэлгээ бодох ба Илгээх
+                </button>
+            </div>
+            
+            <div id="quiz-warning" class="text-amber-400 font-bold text-sm text-center hidden"></div>
+            <div id="sendContainer" class="text-center mt-3"></div>
+            <div id="quiz-result" class="hidden mt-8 p-8 rounded-3xl text-center shadow-2xl border-2 transition-all"></div>
+
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT ЛОГИК -->
+    <script>
+        const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyFZF7iFDG22SXt9Xz43RGKmC6ZzO8x6KTRbpIGf9S4x4GE6nZnJBISj0x_TzLT6qom/exec';
+        const CURRENT_LESSON_SHEET = 'Үнэлгээ';
+        const LOCAL_STORAGE_KEY = 'physics7_length_quiz_submitted';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initQuiz();
+            lucide.createIcons();
+            checkSubmissionStatus();
+            setTimeout(triggerKaTeX, 300);
+        });
+
+        function checkSubmissionStatus() {
+            if (localStorage.getItem(LOCAL_STORAGE_KEY) === 'true') {
+                lockQuizUI();
+                const res = document.getElementById('quiz-result');
+                res.classList.remove('hidden');
+                res.className = 'mt-8 p-6 rounded-2xl text-center shadow-2xl border-2 bg-slate-900 border-red-500/80 text-red-300';
+                res.innerHTML = `<p class="font-bold text-base flex items-center justify-center gap-2"><i data-lucide="lock" class="w-5 h-5"></i> Та энэ хичээлийн сорилыг өгсөн байна. Дахин өгөх боломжгүй.</p>`;
+                lucide.createIcons();
+            }
+        }
+
+        function lockQuizUI() {
+            document.getElementById('studentName').disabled = true;
+            document.getElementById('studentClass').disabled = true;
+            document.querySelectorAll('.quiz-opt-btn').forEach(b => b.disabled = true);
+            const btn = document.getElementById('submitQuizBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                btn.innerHTML = '<i data-lucide="lock" class="w-5 h-5"></i> Илгээгдсэн сорил';
+            }
+        }
+
+        function triggerKaTeX() {
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+        }
+
+        // SVG GENERATORS
+        function getRulerSVG(startCm, endCm) {
+            const width = 320;
+            const height = 110;
+            const lengthCm = endCm - startCm;
+            return `
+            <svg width="${width}" height="${height}" viewBox="0 0 320 110" class="rounded-xl bg-slate-950 border border-slate-800 my-2">
+                <rect x="10" y="40" width="300" height="55" fill="#1e293b" rx="6" stroke="#475569" stroke-width="1.5"/>
+                ${Array.from({length: 81}, (_, i) => {
+                    const x = 20 + i * 3.5;
+                    const isCm = i % 10 === 0;
+                    const isHalf = i % 5 === 0 && !isCm;
+                    const h = isCm ? 22 : (isHalf ? 14 : 8);
+                    const cmVal = i / 10;
+                    return `
+                        <line x1="${x}" y1="40" x2="${x}" y2="${40 + h}" stroke="#cbd5e1" stroke-width="${isCm ? 1.5 : 1}"/>
+                        ${isCm ? `<text x="${x}" y="78" font-size="9" fill="#94a3b8" text-anchor="middle" font-weight="bold">${cmVal}</text>` : ''}
+                    `;
+                }).join('')}
+                <rect x="${20 + startCm * 35}" y="18" width="${lengthCm * 35}" height="18" fill="#6366f1" rx="3" stroke="#818cf8" stroke-width="1.5"/>
+                <text x="${20 + startCm * 35 + (lengthCm * 35)/2}" y="31" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle">Бие</text>
+                <line x1="${20 + startCm * 35}" y1="18" x2="${20 + startCm * 35}" y2="65" stroke="#ef4444" stroke-width="1" stroke-dasharray="2,2"/>
+                <line x1="${20 + endCm * 35}" y1="18" x2="${20 + endCm * 35}" y2="65" stroke="#ef4444" stroke-width="1" stroke-dasharray="2,2"/>
+            </svg>`;
+        }
+
+        function getVernierSVG(mainMm, vernierIndex) {
+            return `
+            <svg width="320" height="110" viewBox="0 0 320 110" class="rounded-xl bg-slate-950 border border-slate-800 my-2">
+                <rect x="10" y="10" width="300" height="45" fill="#334155" rx="4"/>
+                <line x1="20" y1="55" x2="300" y2="55" stroke="#94a3b8" stroke-width="2"/>
+                ${Array.from({length: 31}, (_, i) => {
+                    const x = 30 + i * 8;
+                    const h = i % 10 === 0 ? 18 : (i % 5 === 0 ? 12 : 7);
+                    return `
+                        <line x1="${x}" y1="55" x2="${x}" y2="${55 - h}" stroke="#f8fafc" stroke-width="1.2"/>
+                        ${i % 10 === 0 ? `<text x="${x}" y="26" font-size="9" fill="#cbd5e1" text-anchor="middle" font-weight="bold">${i}</text>` : ''}
+                    `;
+                }).join('')}
+                <rect x="${30 + mainMm * 8 - 10}" y="55" width="110" height="45" fill="#1e293b" rx="4" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="${30 + mainMm * 8 + 45}" y="92" font-size="9" fill="#38bdf8" text-anchor="middle" font-weight="extrabold">Штангенциркуль (0.05 мм)</text>
+                ${Array.from({length: 11}, (_, i) => {
+                    const x = (30 + mainMm * 8) + i * 7.6;
+                    return `<line x1="${x}" y1="55" x2="${x}" y2="68" stroke="${i === vernierIndex ? '#ef4444' : '#38bdf8'}" stroke-width="${i === vernierIndex ? 2 : 1}"/>`;
+                }).join('')}
+            </svg>`;
+        }
+
+        function getMicrometerSVG(m, n) {
+            return `
+            <svg width="320" height="110" viewBox="0 0 320 110" class="rounded-xl bg-slate-950 border border-slate-800 my-2">
+                <rect x="10" y="15" width="300" height="80" fill="#0f172a" rx="8" stroke="#334155"/>
+                <rect x="30" y="35" width="140" height="40" fill="#475569"/>
+                <line x1="30" y1="55" x2="170" y2="55" stroke="#fff" stroke-width="2"/>
+                <text x="70" y="28" font-size="10" fill="#38bdf8" font-weight="bold">Үндсэн: ${m} мм</text>
+                <path d="M 170 25 L 260 33 L 260 77 L 170 85 Z" fill="#334155" stroke="#f59e0b" stroke-width="2"/>
+                <text x="215" y="59" font-size="12" fill="#f59e0b" font-weight="extrabold">Хүрд: ${n}</text>
+            </svg>`;
+        }
+
+        // 20 ИНТЕРАКТИВ АСУУЛТ (LaTeX escape алдаагүй)
+        const quizQuestions = [
+            { topic: "SI нэгж ба ойлголт", q: "1. Олон улсын нэгжийн SI систем дэх уртын үндсэн нэгж юу вэ?", options: ["Километр (км)", "Метр (м)", "Сантиметр (см)", "Миллиметр (мм)"], correct: 1 },
+            { topic: "SI нэгж ба ойлголт", q: "2. $1\\text{ км}$ хэдэн метртэй тэнцэх вэ?", options: ["100 м", "1000 м", "10000 м", "10 м"], correct: 1 },
+            { topic: "SI нэгж ба ойлголт", q: "3. $1\\text{ мм}$ нь хэдэн метр болох вэ?", options: ["0.1 м", "0.01 м", "0.001 м", "0.0001 м"], correct: 2 },
+            { topic: "Нэгж шилжүүлэх", q: "4. $45\\text{ см}$-ийг метрт шилжүүлбэл хэд болох вэ?", options: ["0.45 м", "4.5 м", "0.045 м", "450 м"], correct: 0 },
+            { topic: "Нэгж шилжүүлэх", q: "5. $2.5\\text{ м}$-ийг миллиметрт шилжүүлбэл хэд болох вэ?", options: ["25 мм", "250 мм", "2500 мм", "25000 мм"], correct: 2 },
+            { topic: "Нэгж шилжүүлэх", q: "6. $0.08\\text{ км}$-ийг метрт шилжүүлбэл хэд вэ?", options: ["8 м", "80 м", "800 м", "0.8 м"], correct: 1 },
+            { topic: "Хуваарийн үнэ & Нарийвчлал", q: "7. Хэмжих хэрэгслийн хуваарийн үнийг олохдоо ямар үйлдэл хийх вэ?", options: ["Зэрэгцээ хоёр тооны нийлбэрийг хуваарьт хуваана", "Хамгийн том заалтыг хамгийн жижигт хуваана", "Зэрэгцээ хоёр зураасын тооны ялгаврыг хоорондох хуваарийн тоонд хуваана", "Дуртай хоёр тоогоо үржүүлнэ"], correct: 2 },
+            { topic: "Хуваарийн үнэ & Нарийвчлал", q: "8. Шугамын $0\\text{ см}$-ээс $1\\text{ см}$-ийн хооронд 10 жижиг хуваарь байвал 1 хуваарийн үнэ хэд вэ?", options: ["0.1 мм", "1 мм (0.1 см)", "0.5 мм", "2 мм"], correct: 1 },
+            { topic: "Хуваарийн үнэ & Нарийвчлал", q: "9. Штангенциркулийн нониус 20 хуваарьтай бол түүний нарийвчлал хэд вэ?", options: ["0.1 мм", "0.05 мм", "0.01 мм", "0.5 мм"], correct: 1 },
+            { topic: "Хуваарийн үнэ & Нарийвчлал", q: "10. Микрометрийн хүрдний 1 хуваарь хэдэн миллиметртэй тэнцдэг вэ?", options: ["0.1 мм", "0.05 мм", "0.01 мм", "0.001 мм"], correct: 2 },
+            
+            // Visual Questions
+            { topic: "Шугам ба заалт унших", q: "11. Зурагт өгсөн шугамаар биеийн уртыг хэмжжээ. Биеийн урт хэдэн см бэ?", options: ["4.0 см", "5.4 см", "6.4 см", "1.0 см"], correct: 1, svg: getRulerSVG(1.0, 6.4) },
+            { topic: "Шугам ба заалт унших", q: "12. Зурагт үзүүлсэн биеийн уртыг уншина уу.", options: ["2.5 см", "3.7 см", "4.2 см", "3.0 см"], correct: 1, svg: getRulerSVG(0.0, 3.7) },
+            { topic: "Штангенциркуль ба заалт", q: "13. Штангенциркулийн заалтыг уншина уу (Үндсэн заалт $12\\text{ мм}$, нониусын 8 дахь зураас таарсан).", options: ["12.80 мм", "12.40 мм", "12.08 мм", "12.05 мм"], correct: 1, svg: getVernierSVG(12, 8) },
+            { topic: "Штангенциркуль ба заалт", q: "14. Штангенциркулийн үндсэн заалт $25\\text{ мм}$, нониусын 7 дахь зураас таарсан ($0.05\\text{ мм}$ нарийвчлалтай). Нийт урт хэд вэ?", options: ["25.70 мм", "25.35 мм", "25.07 мм", "25.50 мм"], correct: 1 },
+            { topic: "Микрометрийн заалт", q: "15. Зурагт үзүүлсэн микрометрийн заалтаас биеийн диаметрийг олно уу (Үндсэн заалт $4.5\\text{ мм}$, хүрдний заалт 22).", options: ["4.72 мм", "4.22 мм", "4.50 мм", "4.27 мм"], correct: 0, svg: getMicrometerSVG(4.5, 22) },
+            { topic: "Микрометрийн заалт", q: "16. Микрометрийн үндсэн заалт $8.0\\text{ мм}$, хүрдний заалт 15 байвал нийт хэмжээ хэд болох вэ?", options: ["8.15 мм", "8.50 мм", "8.05 мм", "8.15 см"], correct: 0 },
+            { topic: "Хэмжилтийн алдаа ба дундаж", q: "17. Уртын хэмжилтийн санамсаргүй алдааг багасгахын тулд ямар арга хэрэглэдэг вэ?", options: ["Түргэн хэмжих", "Олон удаа давтан хэмжиж дундаж утгыг олох", "Зөвхөн ганц удаа маш анхааралтай хэмжих", "Том шугам ашиглах"], correct: 1 },
+            { topic: "Хэмжилтийн алдаа ба дундаж", q: "18. Сурагч биеийн уртыг $12.3\\text{ см}$, $12.5\\text{ см}$, $12.4\\text{ см}$ гэж 3 удаа хэмжжээ. Хэмжилтийн дундаж уртыг олно уу.", options: ["12.3 см", "12.4 см", "12.5 см", "12.35 см"], correct: 1 },
+            { topic: "Хэмжилтийн алдаа ба дундаж", q: "19. Биеийн жинхэнэ урт $l_0 = 50.0\\text{ см}$, хэмжсэн урт $l = 50.2\\text{ см}$ бол абсолют алдаа хэд вэ?", options: ["0.1 см", "0.2 см", "50.1 см", "0.02 см"], correct: 1 },
+            { topic: "SI нэгж ба ойлголт", q: "20. $1\\text{ мкм}$ (микрометр) нь метрийн ямар хэсэгтэй тэнцэх вэ?", options: ["$10^{-3}$ м", "$10^{-6}$ м", "$10^{-9}$ м", "$10^{-2}$ м"], correct: 1 }
+        ];
+
+        let userQuizAnswers = {};
+
+        function initQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            
+            quizQuestions.forEach((q, idx) => {
+                const card = document.createElement('div');
+                card.className = "p-5 md:p-6 bg-slate-900 rounded-2xl border border-slate-800 shadow-sm space-y-3";
+                card.id = `quiz-card-${idx}`;
+                
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 rounded-lg text-xs font-bold">${q.topic}</span>
+                        <span class="text-xs text-slate-500 font-bold">Даалгавар ${idx + 1}/20</span>
+                    </div>
+                    
+                    <p class="text-sm md:text-base font-bold text-slate-100">${q.q}</p>
+                    
+                    ${q.svg ? `<div class="flex justify-center">${q.svg}</div>` : ''}
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2" id="q-opts-${idx}">
+                        ${q.options.map((opt, i) => `
+                            <button type="button" onclick="selectQuizAnswer(${idx}, ${i})" class="quiz-opt-btn w-full text-left px-4 py-3 bg-slate-950 text-slate-200 font-medium text-xs md:text-sm rounded-xl border-2 border-slate-800 hover:border-indigo-500/50 transition-all flex items-center">
+                                <span class="inline-block w-6 h-6 rounded-full bg-slate-800 text-center leading-6 mr-3 text-xs font-bold text-slate-400 shrink-0">${String.fromCharCode(65+i)}</span>
+                                <span>${opt}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectQuizAnswer(qIdx, optIdx) {
+            if (localStorage.getItem(LOCAL_STORAGE_KEY) === 'true') return;
+            userQuizAnswers[qIdx] = optIdx;
+            const container = document.getElementById(`q-opts-${qIdx}`);
+            const buttons = container.querySelectorAll('.quiz-opt-btn');
+            
+            buttons.forEach((btn, idx) => {
+                if (idx === optIdx) {
+                    btn.className = "quiz-opt-btn w-full text-left px-4 py-3 bg-indigo-600 text-white font-bold text-xs md:text-sm rounded-xl transition-all shadow-lg flex items-center border-2 border-indigo-400";
+                } else {
+                    btn.className = "quiz-opt-btn w-full text-left px-4 py-3 bg-slate-950 text-slate-200 font-medium text-xs md:text-sm rounded-xl border-2 border-slate-800 hover:border-indigo-500/50 transition-all flex items-center";
+                }
+            });
+            document.getElementById('quiz-warning').classList.add('hidden');
+        }
+
+        function calculateQuizScore() {
+            if (localStorage.getItem(LOCAL_STORAGE_KEY) === 'true') return;
+
+            const name = document.getElementById('studentName').value.trim();
+            const studentClass = document.getElementById('studentClass').value.trim();
+
+            if (!name || !studentClass) {
+                alert('Сурагчийн овог нэр болон анги бүлгийг бүрэн оруулна уу!');
+                return;
+            }
+
+            const answeredCount = Object.keys(userQuizAnswers).length;
+            if (answeredCount < quizQuestions.length) {
+                const warningDiv = document.getElementById('quiz-warning');
+                warningDiv.innerText = `Та ${quizQuestions.length - answeredCount} асуултанд хариулаагүй байна. Бүх даалгаврыг гүйцэтгэнэ үү.`;
+                warningDiv.classList.remove('hidden');
+                return;
+            }
+
+            let score = 0;
+            let missedTopics = [];
+
+            quizQuestions.forEach((q, qIdx) => {
+                const userChoice = userQuizAnswers[qIdx];
+                const container = document.getElementById(`q-opts-${qIdx}`);
+                const buttons = container.querySelectorAll('.quiz-opt-btn');
+
+                buttons.forEach((btn, optIdx) => {
+                    btn.disabled = true;
+                    btn.style.cursor = 'default';
+
+                    if (userChoice === optIdx && userChoice !== q.correct) {
+                        btn.className = "quiz-opt-btn w-full text-left px-4 py-3 bg-red-600 text-white font-bold text-xs md:text-sm rounded-xl flex items-center border-2 border-red-400 shadow-md";
+                    } else if (userChoice === optIdx && userChoice === q.correct) {
+                        btn.className = "quiz-opt-btn w-full text-left px-4 py-3 bg-emerald-500 text-slate-950 font-bold text-xs md:text-sm rounded-xl flex items-center border-2 border-emerald-300 shadow-md";
+                    } else if (optIdx === q.correct) {
+                        btn.className = "quiz-opt-btn w-full text-left px-4 py-3 bg-slate-800 text-emerald-400 font-bold text-xs md:text-sm rounded-xl border-2 border-emerald-500/50 flex items-center";
+                    } else {
+                        btn.className = "quiz-opt-btn w-full text-left px-4 py-3 bg-slate-950 text-slate-600 font-medium text-xs md:text-sm rounded-xl border-2 border-slate-900 flex items-center opacity-40";
+                    }
+                });
+
+                if (userChoice === q.correct) {
+                    score++;
+                } else {
+                    missedTopics.push(q.topic);
+                }
+            });
+
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            const uniqueMissed = [...new Set(missedTopics)];
+
+            const resultDiv = document.getElementById('quiz-result');
+            resultDiv.classList.remove('hidden');
+            
+            let gradeColor = score >= 16 ? 'bg-emerald-950/80 border-emerald-500 text-emerald-200' : (score >= 10 ? 'bg-amber-950/80 border-amber-500 text-amber-200' : 'bg-red-950/80 border-red-500 text-red-200');
+            
+            let feedbackHTML = `<h2 class="text-2xl font-black mb-2">${name} (${studentClass})</h2>`;
+            feedbackHTML += `<p class="text-3xl font-black mb-4">Үнэлгээний оноо: ${score} / ${quizQuestions.length} (${percentage}%)</p>`;
+            
+            if (uniqueMissed.length > 0) {
+                feedbackHTML += `<div class="p-4 bg-slate-950/80 rounded-2xl border border-slate-800 text-left text-xs md:text-sm space-y-2 mt-4">
+                    <p class="font-extrabold text-red-400 flex items-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4"></i> Багшийн Диагностик - Давтах шаардлагатай сэдвүүд:</p>
+                    <ul class="list-disc list-inside text-slate-300 font-medium pl-2 space-y-1">
+                        ${uniqueMissed.map(t => `<li class="text-amber-300">${t}</li>`).join('')}
+                    </ul>
+                </div>`;
+            } else {
+                feedbackHTML += `<p class="text-sm font-bold text-emerald-300 pt-2 flex items-center justify-center gap-2"><i data-lucide="sparkles" class="w-5 h-5"></i> Онцгой сайн! Та "Уртыг хэмжих" сэдвийн бүх бодлого, заалтыг алдаагүй бүрэн уншиж сурсан байна.</p>`;
+            }
+
+            resultDiv.className = `mt-8 p-8 rounded-3xl text-center shadow-2xl border-2 ${gradeColor}`;
+            resultDiv.innerHTML = feedbackHTML;
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+
+            document.getElementById('sendContainer').innerHTML = `<p class="text-indigo-400 font-bold text-sm animate-pulse flex items-center justify-center gap-2"><i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Дүнг багшийн Google Sheet-ийн "Үнэлгээ" шийт рүү бүртгэж байна...</p>`;
+            lucide.createIcons();
+
+            localStorage.setItem(LOCAL_STORAGE_KEY, 'true');
+            lockQuizUI();
+
+            // Google Sheets рүү Илгээх
+            fetch(GOOGLE_APP_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                    sheetName: CURRENT_LESSON_SHEET,
+                    name: name,
+                    studentClass: studentClass,
+                    score: score,
+                    percentage: percentage,
+                    missedTopics: uniqueMissed.length > 0 ? uniqueMissed.join(' | ') : 'Бүрэн ойлгосон',
+                    timestamp: new Date().toLocaleString()
+                })
+            }).then(() => {
+                document.getElementById('sendContainer').innerHTML = `<p class="text-emerald-400 font-bold text-sm flex items-center justify-center gap-2"><i data-lucide="check-circle-2" class="w-5 h-5"></i> Дүн "${CURRENT_LESSON_SHEET}" шийт рүү амжилттай илгээгдлээ!</p>`;
+                lucide.createIcons();
+            }).catch(err => {
+                document.getElementById('sendContainer').innerHTML = `<p class="text-amber-400 font-bold text-sm">Илгээхэд алдаа гарлаа. (Сүлжээгээ шалгана уу)</p>`;
+            });
+        }
+    </script>
+</body>
+</html>

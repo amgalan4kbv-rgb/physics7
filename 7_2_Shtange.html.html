@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Физик 7: Штангенциркуль ашиглан биеийн уртыг хэмжих</title>
+    
+    <!-- MathJax CDN for LaTeX Formula Rendering -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #2563eb;
+            --accent: #d97706;
+            --bg-light: #f8fafc;
+            --text: #1e293b;
+            --correct: #16a34a;
+            --incorrect: #dc2626;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text);
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header p { margin: 6px 0 0; opacity: 0.9; font-size: 1rem; }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            background-color: var(--primary);
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-tabs li {
+            padding: 14px 22px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            border-bottom: 4px solid transparent;
+            font-size: 0.95rem;
+        }
+
+        .nav-tabs li:hover, .nav-tabs li.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-bottom: 4px solid #fbbf24;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 22px;
+            border-left: 5px solid var(--secondary);
+            transition: border-color 0.2s;
+        }
+
+        .card h3, .card h4 {
+            margin-top: 0;
+            color: var(--primary);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+
+        .diagram-container {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 15px;
+            box-sizing: border-box;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .diagram-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .parts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .part-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .part-badge {
+            background-color: #dc2626;
+            color: white;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .part-text strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .part-text span {
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .example-box {
+            background-color: #f0fdf4;
+            border: 2px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .example-step {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .example-step strong {
+            color: #15803d;
+        }
+
+        .btn-toggle {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-toggle:hover { opacity: 0.9; }
+
+        .answer-box {
+            display: none;
+            margin-top: 12px;
+            padding: 14px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            line-height: 1.6;
+        }
+
+        .sim-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .iframe-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .student-info-box {
+            background: #e0f2fe;
+            border: 2px solid #38bdf8;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .student-info-box input {
+            padding: 10px 14px;
+            font-size: 1rem;
+            border: 1px solid #94a3b8;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .student-info-box input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .q-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-option {
+            display: block;
+            padding: 10px 14px;
+            margin: 6px 0;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .quiz-option:hover {
+            background-color: #f1f5f9;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .quiz-actions button {
+            flex: 1;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-check { background-color: var(--secondary); }
+        .btn-reset { background-color: #64748b; }
+
+        .result-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
+        }
+
+        .status-badge {
+            margin-top: 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .status-sending { background-color: #fef3c7; color: #d97706; }
+        .status-success { background-color: #dcfce7; color: #15803d; }
+        .status-error { background-color: #fee2e2; color: #b91c1c; }
+
+        @media (max-width: 768px) {
+            .nav-tabs li { padding: 10px 12px; font-size: 0.85rem; }
+            .iframe-wrapper { height: 420px; }
+            .quiz-actions { flex-direction: column; }
+            .parts-grid { grid-template-columns: 1fr; }
+            .student-info-box { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Штангенциркуль ашиглан биеийн уртыг хэмжих</h1>
+    <p>Физик 7-р анги | Интерактив сургалтын систем</p>
+</header>
+
+<ul class="nav-tabs">
+    <li class="active" onclick="switchTab(0)">1. Сэдэлжүүлэх</li>
+    <li onclick="switchTab(1)">2. Онол ба Бүтэц</li>
+    <li onclick="switchTab(2)">3. Интерактив туршилт</li>
+    <li onclick="switchTab(3)">4. Бодлого (5)</li>
+    <li onclick="switchTab(4)">5. Сорил ба Оношилгоо (10)</li>
+</ul>
+
+<!-- TAB 1: MOTIVATION -->
+<div class="tab-content active" id="tab-0">
+    <h2>💡 Сэдэлжүүлэх хэсэг: Яагаад энгийн шугам хангалтгүй вэ?</h2>
+    <div class="card">
+        <h3>🤔 Тунгаан бодоорой</h3>
+        <p>Бидэнд сургуулийн ердийн шугам (хуваарийн үнэ нь 1 мм) байдаг. Тэгвэл дараах зүйлсийг шугамаар хэр тодорхой хэмжиж чадах вэ?</p>
+        <ul>
+            <li>Зоосны зузаан (миллиметрээс бага нарийвчлалтай)</li>
+            <li>Шилэн аяганы эзлэхүүнийг тодорхойлоход дотоод диаметр</li>
+            <li>Цасны гутлын улны ховилын гүн</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleAnswer('m1')">Хариултыг харах</button>
+        <div class="answer-box" id="m1">
+            👉 Энгийн шугам нь хамгийн багадаа <strong>1 мм</strong>-ийг заадаг тул миллиметрийг хуваан хэмжиж чадахгүй. Мөн аяганы дотоод диаметр эсвэл ховилын гүнийг ердийн шугамаар яг таг хэмжихэд хүндрэлтэй. Иймээс физикт <strong>0.1 мм эсвэл 0.05 мм</strong> өндөр нарийвчлалтай хэмждэг <strong>Штангенциркуль</strong> багажийг ашигладаг.
+        </div>
+    </div>
+</div>
+
+<!-- TAB 2: THEORY -->
+<div class="tab-content" id="tab-1">
+    <h2>📖 Штангенциркулийн бүтэц ба Хэмжилт хийх зарчим</h2>
+
+    <div class="card">
+        <h3>1. Штангенциркулийн бүтэц (Заагч бүхий зураг)</h3>
+        <div class="diagram-container">
+            <svg viewBox="0 0 850 320" xmlns="http://www.w3.org/2000/svg">
+                <rect x="150" y="110" width="620" height="40" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+                <g stroke="#334155" stroke-width="1.5">
+                    <path d="M 200 110 V 125 M 220 110 V 120 M 240 110 V 120 M 260 110 V 120 M 280 110 V 120 M 300 110 V 128 M 320 110 V 120 M 340 110 V 120 M 360 110 V 120 M 380 110 V 120 M 400 110 V 128 M 420 110 V 120 M 440 110 V 120 M 460 110 V 120 M 480 110 V 120 M 500 110 V 128 M 520 110 V 120 M 540 110 V 120 M 560 110 V 120 M 580 110 V 120 M 600 110 V 128 M 620 110 V 120 M 640 110 V 120 M 660 110 V 120 M 680 110 V 120 M 700 110 V 128" />
+                </g>
+                <text x="196" y="138" font-size="11" font-weight="bold" fill="#1e293b">0</text>
+                <text x="294" y="138" font-size="11" font-weight="bold" fill="#1e293b">1</text>
+                <text x="394" y="138" font-size="11" font-weight="bold" fill="#1e293b">2</text>
+                <text x="494" y="138" font-size="11" font-weight="bold" fill="#1e293b">3</text>
+                <text x="594" y="138" font-size="11" font-weight="bold" fill="#1e293b">4</text>
+                <text x="694" y="138" font-size="11" font-weight="bold" fill="#1e293b">5 cm</text>
+
+                <path d="M 150 110 L 150 70 C 150 50 170 45 170 45 L 185 70 L 185 110 Z" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                <path d="M 150 150 L 150 230 C 150 250 190 260 190 260 L 185 220 L 185 150 Z" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+
+                <rect x="770" y="126" width="70" height="8" fill="#94a3b8" stroke="#475569" stroke-width="1.5"/>
+
+                <path d="M 270 90 L 350 90 L 350 170 L 320 230 C 320 230 280 230 280 230 L 290 170 L 270 170 Z" fill="#e2e8f0" stroke="#1e293b" stroke-width="2"/>
+                <path d="M 270 90 L 270 70 L 285 70 L 295 90 Z" fill="#e2e8f0" stroke="#1e293b" stroke-width="2"/>
+
+                <rect x="300" y="70" width="20" height="20" rx="3" fill="#64748b" stroke="#0f172a" stroke-width="1.5"/>
+
+                <g stroke="#dc2626" stroke-width="1.5">
+                    <path d="M 290 150 V 162 M 295 150 V 158 M 300 150 V 158 M 305 150 V 158 M 310 150 V 158 M 315 150 V 162 M 320 150 V 158 M 325 150 V 158 M 330 150 V 158 M 335 150 V 158 M 340 150 V 162" />
+                </g>
+
+                <line x1="165" y1="230" x2="100" y2="270" stroke="#dc2626" stroke-width="2" stroke-dasharray="4"/>
+                <circle cx="100" cy="270" r="14" fill="#dc2626"/>
+                <text x="100" y="275" font-size="13" font-weight="bold" fill="white" text-anchor="middle">1</text>
+
+                <line x1="165" y1="60" x2="100" y2="30" stroke="#dc2626" stroke-width="2" stroke-dasharray="4"/>
+                <circle cx="100" cy="30" r="14" fill="#dc2626"/>
+                <text x="100" y="35" font-size="13" font-weight="bold" fill="white" text-anchor="middle">2</text>
+
+                <line x1="450" y1="110" x2="450" y2="40" stroke="#dc2626" stroke-width="2" stroke-dasharray="4"/>
+                <circle cx="450" cy="30" r="14" fill="#dc2626"/>
+                <text x="450" y="35" font-size="13" font-weight="bold" fill="white" text-anchor="middle">3</text>
+
+                <line x1="315" y1="160" x2="315" y2="270" stroke="#dc2626" stroke-width="2" stroke-dasharray="4"/>
+                <circle cx="315" cy="270" r="14" fill="#dc2626"/>
+                <text x="315" y="275" font-size="13" font-weight="bold" fill="white" text-anchor="middle">4</text>
+
+                <line x1="810" y1="130" x2="810" y2="270" stroke="#dc2626" stroke-width="2" stroke-dasharray="4"/>
+                <circle cx="810" cy="270" r="14" fill="#dc2626"/>
+                <text x="810" y="275" font-size="13" font-weight="bold" fill="white" text-anchor="middle">5</text>
+
+                <line x1="310" y1="70" x2="310" y2="30" stroke="#dc2626" stroke-width="2" stroke-dasharray="4"/>
+                <circle cx="310" cy="30" r="14" fill="#dc2626"/>
+                <text x="310" y="35" font-size="13" font-weight="bold" fill="white" text-anchor="middle">6</text>
+            </svg>
+        </div>
+
+        <div class="parts-grid">
+            <div class="part-item">
+                <div class="part-badge">1</div>
+                <div class="part-text">
+                    <strong>Гадаад хэмжээний эрүү</strong>
+                    <span>Биеийн гадаад урт, өргөн, гадна диаметрийг хэмжинэ.</span>
+                </div>
+            </div>
+            <div class="part-item">
+                <div class="part-badge">2</div>
+                <div class="part-text">
+                    <strong>Дотоод хэмжээний эрүү</strong>
+                    <span>Цилиндр, хоолой, савны дотоод диаметрийг хэмжинэ.</span>
+                </div>
+            </div>
+            <div class="part-item">
+                <div class="part-badge">3</div>
+                <div class="part-text">
+                    <strong>Үндсэн хуваарь (Шкала)</strong>
+                    <span>Миллиметрийн ($\text{мм}$) хуваарьтай хөдөлгөөнгүй үндсэн шугам.</span>
+                </div>
+            </div>
+            <div class="part-item">
+                <div class="part-badge">4</div>
+                <div class="part-text">
+                    <strong>Нониусын хуваарь</strong>
+                    <span>Миллиметрийг хуваан өндөр нарийвчлал заах хөдөлгөөнт хуваарь.</span>
+                </div>
+            </div>
+            <div class="part-item">
+                <div class="part-badge">5</div>
+                <div class="part-text">
+                    <strong>Гүн хэмжигч шүүрэх</strong>
+                    <span>Нүх, ховил, савны гүнийг цухуйж гарч ирэх шүүрээгээр хэмжинэ.</span>
+                </div>
+            </div>
+            <div class="part-item">
+                <div class="part-badge">6</div>
+                <div class="part-text">
+                    <strong>Түгжигч боолт</strong>
+                    <span>Хэмжилт хийсний дараа хөдөлгөөнт хэсгийг бэхэлнэ.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>2. Хуваарийн үнийг олох ба Заалт унших бодит жишээ</h3>
+        <p>Доорх зурагт <strong>20 хуваарь бүхий нониустай бодит штангенциркулийн заалтыг</strong> томруулж харуулсан байна.</p>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="0" width="700" height="230" fill="#f8fafc" rx="8"/>
+                <rect x="30" y="20" width="640" height="70" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+                
+                <g stroke="#1e293b" stroke-width="1.8">
+                    <line x1="50" y1="20" x2="50" y2="55"/>
+                    <line x1="170" y1="20" x2="170" y2="55"/>
+                    <line x1="290" y1="20" x2="290" y2="55"/>
+                    <line x1="410" y1="20" x2="410" y2="55"/>
+                    <line x1="530" y1="20" x2="530" y2="55"/>
+
+                    <line x1="110" y1="20" x2="110" y2="45"/>
+                    <line x1="230" y1="20" x2="230" y2="45"/>
+                    <line x1="350" y1="20" x2="350" y2="45"/>
+                    <line x1="470" y1="20" x2="470" y2="45"/>
+
+                    <line x1="62" y1="20" x2="62" y2="35"/><line x1="74" y1="20" x2="74" y2="35"/><line x1="86" y1="20" x2="86" y2="35"/><line x1="98" y1="20" x2="98" y2="35"/>
+                    <line x1="122" y1="20" x2="122" y2="35"/><line x1="134" y1="20" x2="134" y2="35"/><line x1="146" y1="20" x2="146" y2="35"/><line x1="158" y1="20" x2="158" y2="35"/>
+                    <line x1="182" y1="20" x2="182" y2="35"/><line x1="194" y1="20" x2="194" y2="35"/><line x1="206" y1="20" x2="206" y2="35"/><line x1="218" y1="20" x2="218" y2="35"/>
+                    <line x1="242" y1="20" x2="242" y2="35"/><line x1="254" y1="20" x2="254" y2="35"/><line x1="266" y1="20" x2="266" y2="35"/><line x1="278" y1="20" x2="278" y2="35"/>
+                    <line x1="302" y1="20" x2="302" y2="35"/><line x1="314" y1="20" x2="314" y2="35"/><line x1="326" y1="20" x2="326" y2="35"/><line x1="338" y1="20" x2="338" y2="35"/>
+                    <line x1="362" y1="20" x2="362" y2="35"/><line x1="374" y1="20" x2="374" y2="35"/><line x1="386" y1="20" x2="386" y2="35"/><line x1="398" y1="20" x2="398" y2="35"/>
+                </g>
+
+                <text x="46" y="75" font-size="14" font-weight="bold" fill="#0f172a">0</text>
+                <text x="156" y="75" font-size="14" font-weight="bold" fill="#0f172a">10</text>
+                <text x="276" y="75" font-size="14" font-weight="bold" fill="#0f172a">20 mm</text>
+                <text x="396" y="75" font-size="14" font-weight="bold" fill="#0f172a">30</text>
+
+                <rect x="190" y="90" width="280" height="70" fill="#e2e8f0" stroke="#1e3a8a" stroke-width="2" rx="4"/>
+
+                <g stroke="#dc2626" stroke-width="1.8">
+                    <line x1="221.6" y1="90" x2="221.6" y2="125"/>
+                    <line x1="233.0" y1="90" x2="233.0" y2="110"/>
+                    <line x1="244.4" y1="90" x2="244.4" y2="115"/>
+                    <line x1="255.8" y1="90" x2="255.8" y2="110"/>
+                    <line x1="267.2" y1="90" x2="267.2" y2="110"/>
+                    <line x1="278.6" y1="90" x2="278.6" y2="115"/>
+                    <line x1="290.0" y1="90" x2="290.0" y2="135" stroke="#16a34a" stroke-width="2.5"/>
+                    <line x1="301.4" y1="90" x2="301.4" y2="110"/>
+                    <line x1="312.8" y1="90" x2="312.8" y2="115"/>
+                    <line x1="324.2" y1="90" x2="324.2" y2="110"/>
+                    <line x1="335.6" y1="90" x2="335.6" y2="110"/>
+                    <line x1="347.0" y1="90" x2="347.0" y2="115"/>
+                    <line x1="358.4" y1="90" x2="358.4" y2="110"/>
+                    <line x1="369.8" y1="90" x2="369.8" y2="110"/>
+                    <line x1="381.2" y1="90" x2="381.2" y2="115"/>
+                    <line x1="392.6" y1="90" x2="392.6" y2="110"/>
+                    <line x1="404.0" y1="90" x2="404.0" y2="110"/>
+                    <line x1="415.4" y1="90" x2="415.4" y2="115"/>
+                    <line x1="426.8" y1="90" x2="426.8" y2="110"/>
+                    <line x1="438.2" y1="90" x2="438.2" y2="110"/>
+                    <line x1="449.6" y1="90" x2="449.6" y2="125"/>
+                </g>
+
+                <text x="218" y="145" font-size="12" font-weight="bold" fill="#dc2626">0</text>
+                <text x="286" y="152" font-size="13" font-weight="bold" fill="#16a34a">6</text>
+                <text x="442" y="145" font-size="12" font-weight="bold" fill="#dc2626">20</text>
+                <text x="310" y="150" font-size="11" font-weight="bold" fill="#475569">0.05 mm</text>
+
+                <path d="M 221.6 85 L 221.6 60" stroke="#2563eb" stroke-width="2"/>
+                <text x="175" y="180" font-size="12" font-weight="bold" fill="#2563eb">❶ Нониусын 0 зураас: 14 мм давсан</text>
+
+                <line x1="290" y1="10" x2="290" y2="160" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4"/>
+                <text x="310" y="195" font-size="12" font-weight="bold" fill="#16a34a">❷ 6 дахь зураас яв цав давхцав!</text>
+            </svg>
+        </div>
+
+        <div class="example-box">
+            <h4>💡 Жишээ бодолт: Уг штангенциркулийн хуваарийн үнэ болон заалтыг олох</h4>
+            <div class="example-step">
+                <strong>Алхам 1: Багажийн хуваарийн үнэ (Нарийвчлал C)-ийг олох</strong><br>
+                $$C = \frac{\text{Үндсэн хуваарийн 1 мм}}{\text{Нониусын хуваарийн тоо (N)}} = \frac{1\text{ мм}}{20} = \mathbf{0.05\text{ мм}}$$
+            </div>
+            <div class="example-step">
+                <strong>Алхам 2: Үндсэн хуваарийн заалтыг унших (Бүхэл хэсэг)</strong><br>
+                Нониусын $0$ зураас нь $14\text{ мм}$-ийг давсан тул 👉 <strong>Бүхэл хэсэг = 14 мм</strong>
+            </div>
+            <div class="example-step">
+                <strong>Алхам 3: Нониусын заалтыг унших (Бутархай хэсэг)</strong><br>
+                Нониусын <strong>6 дахь зураас</strong> үндсэн хуваарьтай яв цав давхцсан тул 👉 <strong>Бутархай хэсэг = 6 × 0.05 мм = 0.30 мм</strong>
+            </div>
+            <div class="example-step" style="font-size: 1.1rem; background: #dcfce7; padding: 10px; border-radius: 6px;">
+                <strong>Алхам 4: Эцсийн хэмжилтийн дүнг тодорхойлох</strong><br>
+                $$\text{Нийт урт } L = 14\text{ мм} + 0.30\text{ мм} = \mathbf{14.30\text{ мм}}$$
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TAB 3: SIMULATION -->
+<div class="tab-content" id="tab-2">
+    <h2>🧰 Интерактив туршилт: Vascak.cz Штангенциркуль симулятор</h2>
+    <div class="sim-container">
+        <div class="iframe-wrapper">
+            <iframe src="https://www.vascak.cz/data/android/physicsatschool/template.php?s=mech_posuvka&l=en" title="Vascak Physics at School Vernier Caliper"></iframe>
+        </div>
+        <div style="margin-top: 15px;">
+            <a href="https://www.vascak.cz/data/android/physicsatschool/templateimg.php?s=mech_posuvka&l=en" target="_blank" class="btn-toggle">
+                🔗 Симуляторыг Vascak.cz дээрээс шинэ цонхоор нээх
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- TAB 4: PROBLEMS -->
+<div class="tab-content" id="tab-3">
+    <h2>🧮 Бодлого (5 бодлого)</h2>
+
+    <div class="card">
+        <h4>Бодлого 1:</h4>
+        <p>Доорх зурагт $C = 0.1\text{ мм}$ нарийвчлалтай штангенциркулээр тодорхой биеийн уртыг хэмжиж буйг харуулав. Хэмжилтийн дүнг олно уу.</p>
+        <div class="diagram-container">
+            <svg viewBox="0 0 550 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="20" width="500" height="50" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+                <g stroke="#1e293b" stroke-width="1.5">
+                    <line x1="50" y1="20" x2="50" y2="50"/><line x1="150" y1="20" x2="150" y2="50"/><line x1="250" y1="20" x2="250" y2="50"/><line x1="350" y1="20" x2="350" y2="50"/>
+                    <line x1="70" y1="20" x2="70" y2="35"/><line x1="90" y1="20" x2="90" y2="35"/><line x1="110" y1="20" x2="110" y2="35"/><line x1="130" y1="20" x2="130" y2="35"/>
+                    <line x1="170" y1="20" x2="170" y2="35"/><line x1="190" y1="20" x2="190" y2="35"/><line x1="210" y1="20" x2="210" y2="35"/><line x1="230" y1="20" x2="230" y2="35"/>
+                </g>
+                <text x="44" y="65" font-size="12" font-weight="bold">10</text>
+                <text x="144" y="65" font-size="12" font-weight="bold">15</text>
+                <text x="244" y="65" font-size="12" font-weight="bold">20 мм</text>
+
+                <rect x="180" y="70" width="220" height="50" fill="#e2e8f0" stroke="#1e3a8a" stroke-width="2" rx="4"/>
+                <g stroke="#dc2626" stroke-width="1.8">
+                    <line x1="218" y1="70" x2="218" y2="100"/>
+                    <line x1="236" y1="70" x2="236" y2="92"/><line x1="254" y1="70" x2="254" y2="92"/><line x1="272" y1="70" x2="272" y2="92"/>
+                    <line x1="290" y1="70" x2="290" y2="110" stroke="#16a34a" stroke-width="2.5"/>
+                    <line x1="308" y1="70" x2="308" y2="92"/><line x1="326" y1="70" x2="326" y2="92"/><line x1="344" y1="70" x2="344" y2="92"/><line x1="362" y1="70" x2="362" y2="92"/><line x1="380" y1="70" x2="380" y2="92"/><line x1="398" y1="70" x2="398" y2="100"/>
+                </g>
+                <text x="214" y="115" font-size="11" font-weight="bold" fill="#dc2626">0</text>
+                <text x="286" y="122" font-size="11" font-weight="bold" fill="#16a34a">4</text>
+            </svg>
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('p1')">Бодолтыг харах</button>
+        <div class="answer-box" id="p1">
+            • Бүхэл заалт = $18\text{ мм}$<br>
+            • Бутархай заалт = $4 \times 0.1\text{ мм} = 0.4\text{ мм}$<br>
+            • Нийт урт: $L = 18 + 0.4 = \mathbf{18.4\text{ мм}}$.
+        </div>
+    </div>
+
+    <div class="card">
+        <h4>Бодлого 2:</h4>
+        <p>Доорх зурагт $C = 0.05\text{ мм}$ нарийвчлалтай штангенциркулийн заалт өгөгдөв. Нийт уртыг олно уу.</p>
+        <div class="diagram-container">
+            <svg viewBox="0 0 550 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="20" width="500" height="50" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+                <g stroke="#1e293b" stroke-width="1.5">
+                    <line x1="50" y1="20" x2="50" y2="50"/><line x1="150" y1="20" x2="150" y2="50"/><line x1="250" y1="20" x2="250" y2="50"/>
+                    <line x1="70" y1="20" x2="70" y2="35"/><line x1="90" y1="20" x2="90" y2="35"/><line x1="110" y1="20" x2="110" y2="35"/>
+                </g>
+                <text x="44" y="65" font-size="12" font-weight="bold">0</text>
+                <text x="144" y="65" font-size="12" font-weight="bold">5</text>
+                <text x="244" y="65" font-size="12" font-weight="bold">10 мм</text>
+
+                <rect x="130" y="70" width="280" height="50" fill="#e2e8f0" stroke="#1e3a8a" stroke-width="2" rx="4"/>
+                <line x1="411" y1="20" x2="411" y2="100" stroke="#16a34a" stroke-width="2"/>
+                <text x="160" y="115" font-size="11" font-weight="bold" fill="#dc2626">0</text>
+                <text x="403" y="118" font-size="11" font-weight="bold" fill="#16a34a">14</text>
+            </svg>
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('p2')">Бодолтыг харах</button>
+        <div class="answer-box" id="p2">
+            • Бүхэл заалт = $5\text{ мм}$<br>
+            • Бутархай заалт = $14 \times 0.05\text{ мм} = 0.70\text{ мм}$<br>
+            • Нийт урт: $L = 5 + 0.70 = \mathbf{5.70\text{ мм}}$.
+        </div>
+    </div>
+
+    <div class="card">
+        <h4>Бодлого 3:</h4>
+        <p>Штангенциркулийн нониусын хуваарь нь 10 хуваагдалтай бол уг багажийн хуваарийн үнийг олно уу.</p>
+        <button class="btn-toggle" onclick="toggleAnswer('p3')">Бодолтыг харах</button>
+        <div class="answer-box" id="p3">
+            $C = \frac{1\text{ мм}}{10} = \mathbf{0.1\text{ мм}}$.
+        </div>
+    </div>
+
+    <div class="card">
+        <h4>Бодлого 4:</h4>
+        <p>Аяганы дотоод диаметрийг хэмжихийн тулд штангенциркулийн аль хэсгийг ашиглах вэ?</p>
+        <button class="btn-toggle" onclick="toggleAnswer('p4')">Бодолтыг харах</button>
+        <div class="answer-box" id="p4">
+            <strong>Дотоод хэмжээний эрүүг</strong> ашиглана.
+        </div>
+    </div>
+
+    <div class="card">
+        <h4>Бодлого 5:</h4>
+        <p>Шайбны гадаад диаметрийг хэмжихэд бүхэл мм нь 8, нониусын 7 дахь зураас давхцав ($C = 0.1\text{ мм}$). Уртыг сантиметрээр илэрхийл.</p>
+        <button class="btn-toggle" onclick="toggleAnswer('p5')">Бодолтыг харах</button>
+        <div class="answer-box" id="p5">
+            $L = 8.7\text{ мм} = \mathbf{0.87\text{ см}}$.
+        </div>
+    </div>
+</div>
+
+<!-- TAB 5: QUIZ WITH DIAGNOSTICS & GOOGLE SHEET INTEGRATION -->
+<div class="tab-content" id="tab-4">
+    <h2>✍️ Мэдлэг шалгах 10 сорил (Багшид үнэлгээ ба оношилгоо автоматаар илгээгдэнэ)</h2>
+
+    <div class="card">
+        <div class="student-info-box">
+            <input type="text" id="studentName" placeholder="Сурагчийн бүтэн нэр" style="flex: 2;" required>
+            <input type="text" id="studentClass" placeholder="Анги, бүлэг (Жишээ нь: 7А)" style="flex: 1;" required>
+        </div>
+
+        <form id="quizForm">
+            <!-- Q1 -->
+            <div class="q-card" id="qc1">
+                <p><strong>1. Штангенциркулийн гол давуу тал юу вэ?</strong></p>
+                <label class="quiz-option"><input type="radio" name="q1" value="a"> А. Урт болон замыг хэмждэг</label>
+                <label class="quiz-option"><input type="radio" name="q1" value="b"> Б. Миллиметрээс бага өндөр нарийвчлалтай хэмждэг</label>
+                <label class="quiz-option"><input type="radio" name="q1" value="c"> В. Массыг хэмждэг</label>
+            </div>
+
+            <!-- Q2 -->
+            <div class="q-card" id="qc2">
+                <p><strong>2. Гулсдаг хөдөлгөөнт хуваарийг юу гэж нэрлэдэг вэ?</strong></p>
+                <label class="quiz-option"><input type="radio" name="q2" value="a"> А. Үндсэн хуваарь</label>
+                <label class="quiz-option"><input type="radio" name="q2" value="b"> Б. Нониусын хуваарь</label>
+                <label class="quiz-option"><input type="radio" name="q2" value="c"> В. Гүн хэмжигч</label>
+            </div>
+
+            <!-- Q3 -->
+            <div class="q-card" id="qc3">
+                <p><strong>3. Савны гүнийг штангенциркулийн аль хэсгээр хэмжих вэ?</strong></p>
+                <label class="quiz-option"><input type="radio" name="q3" value="a"> А. Гадаад эрүү</label>
+                <label class="quiz-option"><input type="radio" name="q3" value="b"> Б. Дотоод эрүү</label>
+                <label class="quiz-option"><input type="radio" name="q3" value="c"> В. Гүн хэмжигч шүүрэх</label>
+            </div>
+
+            <!-- Q4 -->
+            <div class="q-card" id="qc4">
+                <p><strong>4. Нониус нь 10 хуваарьтай бол уг багажийн нарийвчлал хэд вэ?</strong></p>
+                <label class="quiz-option"><input type="radio" name="q4" value="a"> А. 1 мм</label>
+                <label class="quiz-option"><input type="radio" name="q4" value="b"> Б. 0.1 мм</label>
+                <label class="quiz-option"><input type="radio" name="q4" value="c"> В. 0.01 мм</label>
+            </div>
+
+            <!-- Q5 -->
+            <div class="q-card" id="qc5">
+                <p><strong>5. Заалт уншихдаа бутархай мм-ийг хэрхэн тодорхойлох вэ?</strong></p>
+                <label class="quiz-option"><input type="radio" name="q5" value="a"> А. Нониусын ба үндсэн хуваарийн яв цав давхцсан зураасаар</label>
+                <label class="quiz-option"><input type="radio" name="q5" value="b"> Б. Хамгийн сүүлийн зураасаар</label>
+                <label class="quiz-option"><input type="radio" name="q5" value="c"> В. Дурын зураасаар</label>
+            </div>
+
+            <!-- Q6 -->
+            <div class="q-card" id="qc6">
+                <p><strong>6. Зурагт үзүүлсэн штангенциркулийн заалтыг олно уу. ($C = 0.1\text{ мм}$)</strong></p>
+                <div class="diagram-container" style="max-width: 450px; margin: 10px 0;">
+                    <svg viewBox="0 0 400 110" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="10" y="10" width="380" height="40" fill="#cbd5e1" stroke="#334155" stroke-width="1.5"/>
+                        <g stroke="#1e293b" stroke-width="1.5">
+                            <line x1="30" y1="10" x2="30" y2="35"/>
+                            <line x1="130" y1="10" x2="130" y2="35"/>
+                            <line x1="230" y1="10" x2="230" y2="35"/>
+                            <line x1="330" y1="10" x2="330" y2="35"/>
+                            <line x1="50" y1="10" x2="50" y2="22"/><line x1="70" y1="10" x2="70" y2="22"/><line x1="90" y1="10" x2="90" y2="22"/><line x1="110" y1="10" x2="110" y2="22"/>
+                            <line x1="150" y1="10" x2="150" y2="22"/><line x1="170" y1="10" x2="170" y2="22"/><line x1="190" y1="10" x2="190" y2="22"/><line x1="210" y1="10" x2="210" y2="22"/>
+                            <line x1="250" y1="10" x2="250" y2="22"/><line x1="270" y1="10" x2="270" y2="22"/><line x1="290" y1="10" x2="290" y2="22"/><line x1="310" y1="10" x2="310" y2="22"/>
+                        </g>
+                        <text x="24" y="48" font-size="11" font-weight="bold">10</text>
+                        <text x="124" y="48" font-size="11" font-weight="bold">15</text>
+                        <text x="224" y="48" font-size="11" font-weight="bold">20</text>
+                        <text x="324" y="48" font-size="11" font-weight="bold">25 мм</text>
+
+                        <rect x="64" y="50" width="200" height="45" fill="#e2e8f0" stroke="#1e3a8a" stroke-width="1.5" rx="3"/>
+                        <g stroke="#dc2626" stroke-width="1.5">
+                            <line x1="70" y1="50" x2="70" y2="75"/>
+                            <line x1="88" y1="50" x2="88" y2="68"/>
+                            <line x1="106" y1="50" x2="106" y2="68"/>
+                            <line x1="124" y1="50" x2="124" y2="80" stroke="#16a34a" stroke-width="2"/>
+                            <line x1="142" y1="50" x2="142" y2="68"/>
+                            <line x1="160" y1="50" x2="160" y2="68"/>
+                            <line x1="178" y1="50" x2="178" y2="68"/>
+                            <line x1="196" y1="50" x2="196" y2="68"/>
+                            <line x1="214" y1="50" x2="214" y2="68"/>
+                            <line x1="232" y1="50" x2="232" y2="68"/>
+                            <line x1="250" y1="50" x2="250" y2="75"/>
+                        </g>
+                        <text x="66" y="88" font-size="10" font-weight="bold" fill="#dc2626">0</text>
+                        <text x="120" y="93" font-size="10" font-weight="bold" fill="#16a34a">3</text>
+                        <text x="244" y="88" font-size="10" font-weight="bold" fill="#dc2626">10</text>
+                    </svg>
+                </div>
+                <label class="quiz-option"><input type="radio" name="q6" value="a"> А. 12.0 мм</label>
+                <label class="quiz-option"><input type="radio" name="q6" value="b"> Б. 12.3 мм</label>
+                <label class="quiz-option"><input type="radio" name="q6" value="c"> В. 15.3 мм</label>
+            </div>
+
+            <!-- Q7 -->
+            <div class="q-card" id="qc7">
+                <p><strong>7. Нониус нь 20 хуваарьтай штангенциркулийн хуваарийн үнэ (нарийвчлал) хэд вэ?</strong></p>
+                <label class="quiz-option"><input type="radio" name="q7" value="a"> А. 0.1 мм</label>
+                <label class="quiz-option"><input type="radio" name="q7" value="b"> Б. 0.05 мм</label>
+                <label class="quiz-option"><input type="radio" name="q7" value="c"> В. 0.02 мм</label>
+            </div>
+
+            <!-- Q8 -->
+            <div class="q-card" id="qc8">
+                <p><strong>8. Хэмжилт хийсний дараа хөдөлгөөнт хэсгийг хөдөлгөхгүй бэхлэх зориулалттай хэсэг юу вэ?</strong></p>
+                <label class="quiz-option"><input type="radio" name="q8" value="a"> А. Түгжигч боолт</label>
+                <label class="quiz-option"><input type="radio" name="q8" value="b"> Б. Үндсэн хуваарь</label>
+                <label class="quiz-option"><input type="radio" name="q8" value="c"> В. Гүн хэмжигч</label>
+            </div>
+
+            <!-- Q9 -->
+            <div class="q-card" id="qc9">
+                <p><strong>9. Үндсэн хуваарийн заалт 25 мм, $C = 0.05\text{ мм}$ ба нониусын 8 дахь зураас давхцсан бол хэмжилтийн дүн хэд вэ?</strong></p>
+                <label class="quiz-option"><input type="radio" name="q9" value="a"> А. 25.80 мм</label>
+                <label class="quiz-option"><input type="radio" name="q9" value="b"> Б. 25.40 мм</label>
+                <label class="quiz-option"><input type="radio" name="q9" value="c"> В. 25.08 мм</label>
+            </div>
+
+            <!-- Q10 -->
+            <div class="q-card" id="qc10">
+                <p><strong>10. Шилэн цилиндрийн гадна диаметрийг хэмжихийн тулд штангенциркулийн аль хэсгийг ашиглах вэ?</strong></p>
+                <label class="quiz-option"><input type="radio" name="q10" value="a"> А. Дотоод хэмжээний эрүү</label>
+                <label class="quiz-option"><input type="radio" name="q10" value="b"> Б. Гүн хэмжигч шүүрэх</label>
+                <label class="quiz-option"><input type="radio" name="q10" value="c"> В. Гадаад хэмжээний эрүү</label>
+            </div>
+
+            <div class="quiz-actions">
+                <button type="button" class="btn-check" onclick="checkQuiz()">Сорил шалгах ба Багш руу илгээх</button>
+                <button type="button" class="btn-reset" onclick="resetQuiz()">Дахин эхлэх</button>
+            </div>
+        </form>
+
+        <div id="resultBox" class="result-box">
+            <h3 id="scoreText"></h3>
+            <div id="diagnosticFeedback"></div>
+            <div id="sendContainer"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Google Apps Script Web App URL
+    const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxss6Fsu7LX6JGCkKIMumFNdG8aRkeBOku8yZymsqTk3q5e0l8X9xJpG5ExTe0kN01L/exec';
+
+    // Хуудас ачаалагдах үед өмнө нь өгсөн эсэхийг шалгах
+    document.addEventListener('DOMContentLoaded', () => {
+        checkSubmissionStatus();
+    });
+
+    function checkSubmissionStatus() {
+        const isSubmitted = localStorage.getItem('physics7_caliper_submitted');
+        if (isSubmitted === 'true') {
+            lockQuizUI();
+            const resultBox = document.getElementById('resultBox');
+            const scoreText = document.getElementById('scoreText');
+            const feedback = document.getElementById('diagnosticFeedback');
+            
+            resultBox.style.display = 'block';
+            scoreText.innerHTML = `🔒 <strong>Сорил илгээгдсэн байна!</strong>`;
+            feedback.innerHTML = `<p style="color: #dc2626; font-weight: bold;">Энэ төхөөрөмжөөс сорилыг хэдийнэ өгсөн тул дахин өгөх боломжгүй. Багш таны эхний дүнг хүлээн авсан болно.</p>`;
+        }
+    }
+
+    function lockQuizUI() {
+        document.getElementById('studentName').disabled = true;
+        document.getElementById('studentClass').disabled = true;
+
+        const radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach(r => r.disabled = true);
+
+        const btnCheck = document.querySelector('.btn-check');
+        if (btnCheck) {
+            btnCheck.disabled = true;
+            btnCheck.style.backgroundColor = '#94a3b8';
+            btnCheck.style.cursor = 'not-allowed';
+            btnCheck.innerText = '🔒 Сорил илгээгдсэн (Дахин өгөх боломжгүй)';
+        }
+
+        const btnReset = document.querySelector('.btn-reset');
+        if (btnReset) {
+            btnReset.style.display = 'none';
+        }
+    }
+
+    function switchTab(index) {
+        const tabs = document.querySelectorAll('.nav-tabs li');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach((tab, i) => {
+            if (i === index) {
+                tab.classList.add('active');
+                contents[i].classList.add('active');
+            } else {
+                tab.classList.remove('active');
+                contents[i].classList.remove('active');
+            }
+        });
+    }
+
+    function toggleAnswer(id) {
+        const box = document.getElementById(id);
+        if (box.style.display === 'block') {
+            box.style.display = 'none';
+        } else {
+            box.style.display = 'block';
+        }
+    }
+
+    function checkQuiz() {
+        if (localStorage.getItem('physics7_caliper_submitted') === 'true') {
+            alert('Та энэ сорилыг өмнө нь өгсөн байна!');
+            return;
+        }
+
+        const name = document.getElementById('studentName').value.trim();
+        const studentClass = document.getElementById('studentClass').value.trim();
+
+        if (!name || !studentClass) {
+            alert('Илгээхээс өмнө сурагчийн нэр болон анги бүлгээ заавал оруулна уу!');
+            return;
+        }
+
+        const correctAnswers = {
+            q1: 'b',
+            q2: 'b',
+            q3: 'c',
+            q4: 'b',
+            q5: 'a',
+            q6: 'b',
+            q7: 'b',
+            q8: 'a',
+            q9: 'b',
+            q10: 'c'
+        };
+
+        let score = 0;
+        let missedTopics = [];
+
+        for (let i = 1; i <= 10; i++) {
+            const qName = 'q' + i;
+            const selected = document.querySelector(`input[name="${qName}"]:checked`);
+            const qCard = document.getElementById('qc' + i);
+
+            if (selected && selected.value === correctAnswers[qName]) {
+                score++;
+                if (qCard) {
+                    qCard.style.borderColor = '#16a34a';
+                    qCard.style.backgroundColor = '#f0fdf4';
+                }
+            } else {
+                if (qCard) {
+                    qCard.style.borderColor = '#dc2626';
+                    qCard.style.backgroundColor = '#fef2f2';
+                }
+
+                if ([1, 2, 3, 8, 10].includes(i)) {
+                    missedTopics.push('Штангенциркулийн бүтэц, эд ангиудын зориулалт');
+                } else if ([4, 7].includes(i)) {
+                    missedTopics.push('Хуваарийн үнэ ба нарийвчлал тодорхойлох');
+                } else if ([5, 6, 9].includes(i)) {
+                    missedTopics.push('Нониусын заалт унших, хэмжилт тооцоолох');
+                }
+            }
+        }
+
+        const percentage = (score / 10) * 100;
+        const resultBox = document.getElementById('resultBox');
+        const scoreText = document.getElementById('scoreText');
+        const feedback = document.getElementById('diagnosticFeedback');
+        const sendContainer = document.getElementById('sendContainer');
+
+        resultBox.style.display = 'block';
+        scoreText.innerHTML = `📊 Сурлагын амжилт: <strong>${name}</strong> (${studentClass}) - <strong>${score} / 10</strong> (${percentage}%)`;
+
+        const uniqueMissed = [...new Set(missedTopics)];
+
+        if (uniqueMissed.length === 0) {
+            feedback.innerHTML = `<p style="color: #16a34a; font-weight: bold;">🎉 Баяр хүргэе! Та штангенциркулийн бүтэц ба хэмжилт хийх аргыг бүрэн дүүрэн ойлгосон байна.</p>`;
+        } else {
+            let feedbackHtml = `<p style="color: #dc2626; font-weight: bold;">🔍 Дахин давтах шаардлагатай агуулгууд (Оношилгоо):</p><ul>`;
+            uniqueMissed.forEach(topic => {
+                feedbackHtml += `<li>${topic}</li>`;
+            });
+            feedbackHtml += `</ul><p style="font-size: 0.9rem; color: #475569;">💡 Та 2-р хэсгийн "Онол ба Бүтэц" болон 3-р хэсгийн интерактив симуляторыг ашиглан бататгаарай.</p>`;
+            feedback.innerHTML = feedbackHtml;
+        }
+
+        sendContainer.innerHTML = `<div class="status-badge status-sending" id="statusMessage">📤 Дүнг багшийн нэгдсэн систем рүү илгээж байна...</div>`;
+
+        resultBox.scrollIntoView({ behavior: 'smooth' });
+
+        // Сорилыг 1 удаа өгсөн төлөвт хадгалж, UI-г цоожилно
+        localStorage.setItem('physics7_caliper_submitted', 'true');
+        lockQuizUI();
+
+        // Google Sheet рүү мэдээлэл илгээх
+        sendDataToGoogleSheet({
+            name: name,
+            studentClass: studentClass,
+            score: score,
+            percentage: percentage,
+            missedTopics: uniqueMissed.length > 0 ? uniqueMissed.join(' | ') : 'Ойлгоогүй агуулга байхгүй (100%)',
+            timestamp: new Date().toLocaleString()
+        });
+    }
+
+    function sendDataToGoogleSheet(data) {
+        const statusMessage = document.getElementById('statusMessage');
+
+        fetch(GOOGLE_APP_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if (statusMessage) {
+                statusMessage.className = 'status-badge status-success';
+                statusMessage.innerHTML = '✅ Таны сорилын дүн ба оношилгооны мэдээлэл багшид амжилттай бүртгэгдлээ!';
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            if (statusMessage) {
+                statusMessage.className = 'status-badge status-error';
+                statusMessage.innerHTML = '⚠️ Дата илгээхэд алдаа гарлаа. Дахин оролдоно уу.';
+            }
+        });
+    }
+
+    function resetQuiz() {
+        if (localStorage.getItem('physics7_caliper_submitted') === 'true') {
+            alert('Сорил хэдийнэ илгээгдсэн тул арилгах боломжгүй.');
+            return;
+        }
+        document.getElementById('quizForm').reset();
+        document.getElementById('resultBox').style.display = 'none';
+        for (let i = 1; i <= 10; i++) {
+            const qCard = document.getElementById('qc' + i);
+            if (qCard) {
+                qCard.style.borderColor = '#e2e8f0';
+                qCard.style.backgroundColor = '#ffffff';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

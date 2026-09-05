@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Физик: Штангенциркуль ба Микрометрээр хэмжих нь</title>
+    
+    <!-- MathJax CDN -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e40af;
+            --accent: #d97706;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header p { margin-top: 8px; opacity: 0.9; }
+
+        .teacher-badge {
+            margin-top: 12px;
+            font-weight: 600;
+            color: #fbbf24;
+            background: rgba(255, 255, 255, 0.1);
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.4);
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            background-color: var(--secondary);
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-tabs li {
+            padding: 14px 20px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            border-bottom: 4px solid transparent;
+        }
+
+        .nav-tabs li:hover, .nav-tabs li.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-bottom: 4px solid #fbbf24;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 25px 15px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active { display: block; }
+
+        .card {
+            background: var(--card-bg);
+            padding: 22px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .card h3, .card h4 {
+            margin-top: 0;
+            color: var(--secondary);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 8px;
+        }
+
+        .diagram-container {
+            width: 100%;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 15px;
+            box-sizing: border-box;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .diagram-container svg { max-width: 100%; height: auto; }
+
+        .formula-box {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .student-info-box {
+            background: #e0f2fe;
+            border: 2px solid #38bdf8;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .student-info-box input {
+            padding: 10px 14px;
+            font-size: 1rem;
+            border: 1px solid #94a3b8;
+            border-radius: 6px;
+            flex: 1;
+        }
+
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            margin-right: 10px;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+
+        .btn:hover { background-color: #1d4ed8; }
+
+        .btn-reset {
+            background-color: #64748b;
+        }
+
+        .btn-reset:hover { background-color: #475569; }
+
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            height: 550px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .iframe-wrapper iframe { width: 100%; height: 100%; border: none; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        th { background-color: #f1f5f9; color: var(--primary); }
+
+        .quiz-opt {
+            display: block;
+            padding: 10px 14px;
+            margin: 6px 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-opt:hover { background: #f8fafc; }
+
+        .quiz-opt.correct {
+            background-color: #dcfce7 !important;
+            border-color: #16a34a !important;
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .quiz-opt.wrong {
+            background-color: #fee2e2 !important;
+            border-color: #dc2626 !important;
+            color: #b91c1c;
+            font-weight: bold;
+        }
+
+        .status-badge {
+            margin-top: 10px;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .status-success { background-color: #dcfce7; color: #15803d; }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #0f172a;
+            color: #94a3b8;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Уртыг нарийвчлалтай хэмжих: Штангенциркуль ба Микрометр</h1>
+    <p>Физикийн интерактив хичээл | 7-р анги</p>
+    <div class="teacher-badge">
+        Бэлтгэсэн: Цаст-Алтай сургуулийн физикийн багш М.Амгалан
+    </div>
+</header>
+
+<ul class="nav-tabs">
+    <li class="active" onclick="switchTab(0)">1. Штангенциркуль</li>
+    <li onclick="switchTab(1)">2. Микрометр</li>
+    <li onclick="switchTab(2)">3. Симулятор (Туршилт)</li>
+    <li onclick="switchTab(3)">4. Багшийн зөвлөгөө ба Алдаа</li>
+    <li onclick="switchTab(4)">5. Сорил шалгалт</li>
+</ul>
+
+<!-- TAB 1: VERNIER CALIPER -->
+<div class="tab-content active" id="tab-0">
+    <h2>📐 1. Штангенциркуль ашиглан хэмжих</h2>
+    
+    <div class="card">
+        <h3>Бүтэц ба Нарийвчлал</h3>
+        <p>Штангенциркуль нь миллиметрээс бага буюу 0.1 мм эсвэл 0.05 мм-ийн нарийвчлалтай хэмжилт хийдэг багаж юм.</p>
+        
+        <div class="formula-box">
+            <strong>Хуваарийн үнэ ($C$) ба заалт бодох томьёо:</strong>
+            $$C = \frac{1\text{ мм}}{\text{Нониусын хуваарийн тоо } (N)}$$
+            $$\text{Нийт урт } L = L_{\text{үндсэн}} + (n \times C)$$
+            <ul>
+                <li>$L_{\text{үндсэн}}$: Нониусын 0 зурааснаас өмнөх үндсэн хуваарийн бүхэл миллиметр</li>
+                <li>$n$: Үндсэн хуваарийн зураастай яв цав давхцсан нониусын зураасын дугаар</li>
+            </ul>
+        </div>
+
+        <h4>Штангенциркулийн заалт унших жишээ:</h4>
+        <div class="diagram-container">
+            <svg viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="20" width="550" height="50" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+                <g stroke="#1e293b" stroke-width="1.5">
+                    <line x1="50" y1="20" x2="50" y2="50"/><line x1="150" y1="20" x2="150" y2="50"/>
+                    <line x1="250" y1="20" x2="250" y2="50"/><line x1="350" y1="20" x2="350" y2="50"/>
+                    <line x1="70" y1="20" x2="70" y2="35"/><line x1="90" y1="20" x2="90" y2="35"/>
+                    <line x1="110" y1="20" x2="110" y2="35"/><line x1="130" y1="20" x2="130" y2="35"/>
+                    <line x1="170" y1="20" x2="170" y2="35"/><line x1="190" y1="20" x2="190" y2="35"/>
+                    <line x1="210" y1="20" x2="210" y2="35"/><line x1="230" y1="20" x2="230" y2="35"/>
+                </g>
+                <text x="44" y="65" font-size="12" font-weight="bold">10</text>
+                <text x="144" y="65" font-size="12" font-weight="bold">15</text>
+                <text x="244" y="65" font-size="12" font-weight="bold">20 мм</text>
+
+                <rect x="98" y="70" width="220" height="50" fill="#e2e8f0" stroke="#1e3a8a" stroke-width="2" rx="4"/>
+                <g stroke="#dc2626" stroke-width="1.8">
+                    <line x1="98" y1="70" x2="98" y2="100"/>
+                    <line x1="116" y1="70" x2="116" y2="90"/>
+                    <line x1="134" y1="70" x2="134" y2="90"/>
+                    <line x1="152" y1="70" x2="152" y2="90"/>
+                    <line x1="170" y1="70" x2="170" y2="110" stroke="#16a34a" stroke-width="2.5"/>
+                    <line x1="188" y1="70" x2="188" y2="90"/>
+                    <line x1="206" y1="70" x2="206" y2="90"/>
+                    <line x1="224" y1="70" x2="224" y2="90"/>
+                    <line x1="242" y1="70" x2="242" y2="90"/>
+                    <line x1="260" y1="70" x2="260" y2="90"/>
+                    <line x1="278" y1="70" x2="278" y2="100"/>
+                </g>
+                <text x="94" y="115" font-size="11" font-weight="bold" fill="#dc2626">0</text>
+                <text x="166" y="122" font-size="11" font-weight="bold" fill="#16a34a">4</text>
+                <text x="270" y="115" font-size="11" font-weight="bold" fill="#dc2626">10</text>
+            </svg>
+        </div>
+        <p><strong>Жишээ бодолт:</strong> Нониусын 0 зураас 12 мм-ийн ард байна. 4 дэх зураас давхцсан ($C=0.1\text{ мм}$).<br>
+        $$\text{Заалт } L = 12\text{ мм} + (4 \times 0.1\text{ мм}) = \mathbf{12.4\text{ мм}}$$</p>
+    </div>
+</div>
+
+<!-- TAB 2: MICROMETER -->
+<div class="tab-content" id="tab-1">
+    <h2>🔬 2. Микрометр ашиглан хэмжих</h2>
+
+    <div class="card">
+        <h3>Микрометрийн бүтэц ба зарчим</h3>
+        <p>Микрометр нь штангенциркулиас илүү өндөр буюу <strong>0.01 мм (10 мкм)</strong> нарийвчлалтай хэмждэг багаж юм. Металл утасны диаметр, нимгэн цаасны зузааныг хэмжихэд тохиромжтой.</p>
+
+        <div class="formula-box">
+            <strong>Микрометрийн заалт унших томьёо:</strong>
+            $$L = L_{\text{стебель}} + (k \times 0.01\text{ мм})$$
+            <ul>
+                <li>$L_{\text{стебель}}$: Суурь цилиндр дээрх заалт (Доод зураас 0.5 мм-ийг заана)</li>
+                <li>$k$: Эргэлдэгч бөмбөрцөг (Барабан) дээрх хэвтээ тэнхлэгтэй давхцсан хуваарийн дугаар</li>
+            </ul>
+        </div>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 650 200" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 40 100 C 40 170 180 170 180 100 L 180 80 L 140 80 L 140 100 C 140 140 80 140 80 100 Z" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                <rect x="40" y="85" width="20" height="30" fill="#64748b"/>
+                <rect x="100" y="93" width="80" height="14" fill="#cbd5e1" stroke="#334155"/>
+                <rect x="180" y="80" width="160" height="40" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+                <line x1="190" y1="100" x2="310" y2="100" stroke="#0f172a" stroke-width="1.5"/>
+                <g stroke="#0f172a" stroke-width="1.2">
+                    <line x1="200" y1="100" x2="200" y2="88"/><line x1="215" y1="100" x2="215" y2="88"/>
+                    <line x1="230" y1="100" x2="230" y2="88"/><line x1="245" y1="100" x2="245" y2="88"/>
+                    <line x1="260" y1="100" x2="260" y2="88"/><line x1="275" y1="100" x2="275" y2="88"/>
+                    <line x1="290" y1="100" x2="290" y2="88"/>
+                    <line x1="207.5" y1="100" x2="207.5" y2="112"/><line x1="222.5" y1="100" x2="222.5" y2="112"/>
+                    <line x1="237.5" y1="100" x2="237.5" y2="112"/><line x1="252.5" y1="100" x2="252.5" y2="112"/>
+                    <line x1="267.5" y1="100" x2="267.5" y2="112"/><line x1="282.5" y1="100" x2="282.5" y2="112"/>
+                </g>
+                <text x="196" y="82" font-size="10" font-weight="bold">0</text>
+                <text x="271" y="82" font-size="10" font-weight="bold">5 мм</text>
+
+                <path d="M 300 70 L 320 70 L 380 75 L 380 125 L 320 130 L 300 130 Z" fill="#e2e8f0" stroke="#1e3a8a" stroke-width="2"/>
+                <g stroke="#dc2626" stroke-width="1.5">
+                    <line x1="300" y1="100" x2="320" y2="100"/>
+                    <line x1="300" y1="90" x2="320" y2="88"/>
+                    <line x1="300" y1="110" x2="320" y2="112"/>
+                    <line x1="300" y1="120" x2="320" y2="124"/>
+                </g>
+                <text x="325" y="104" font-size="11" font-weight="bold" fill="#dc2626">38</text>
+                <text x="325" y="91" font-size="10" fill="#64748b">40</text>
+                <text x="325" y="116" font-size="10" fill="#64748b">35</text>
+
+                <rect x="380" y="85" width="40" height="30" fill="#64748b" rx="3"/>
+                <text x="385" y="104" font-size="9" fill="white">Ratchet</text>
+            </svg>
+        </div>
+
+        <p><strong>Зургаас заалт унших:</strong><br>
+        1. Стебель дээрх заалт: $7.0\text{ мм}$ харагдаж байна ($0.5\text{ мм}$-ийн доод зураас цухуйгаагүй).<br>
+        2. Барабан дээрх хэвтээ зураастай давхцсан тоо: $38$<br>
+        $$\text{Нийт хэмжээ } L = 7.0\text{ мм} + (38 \times 0.01\text{ мм}) = \mathbf{7.38\text{ мм}}$$</p>
+    </div>
+</div>
+
+<!-- TAB 3: SIMULATORS -->
+<div class="tab-content" id="tab-2">
+    <h2>🖥️ 3. Интерактив симуляторууд (Дадлага ажил)</h2>
+    
+    <div class="card">
+        <h3>1. Штангенциркуль симулятор (Vascak.cz)</h3>
+        <div class="iframe-wrapper">
+            <iframe src="https://www.vascak.cz/data/android/physicsatschool/template.php?s=mech_posuvka&l=mn" title="Vernier Caliper Simulator"></iframe>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>2. Микрометр симулятор (Vascak.cz)</h3>
+        <div class="iframe-wrapper">
+            <iframe src="https://www.vascak.cz/data/android/physicsatschool/template.php?s=mech_mikrometr&l=mn" title="Micrometer Simulator"></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- TAB 4: TEACHER TIPS & COMPARISON -->
+<div class="tab-content" id="tab-3">
+    <h2>👨‍🏫 4. Багшийн зөвлөгөө ба Алдаа</h2>
+
+    <div class="card">
+        <h3>Багажуудын харьцуулалт</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Үзүүлэлт</th>
+                    <th>Штангенциркуль</th>
+                    <th>Микрометр</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Нарийвчлал</strong></td>
+                    <td>0.1 мм эсвэл 0.05 мм</td>
+                    <td>0.01 мм (10 мкм)</td>
+                </tr>
+                <tr>
+                    <td><strong>Хэмжих зүйлс</strong></td>
+                    <td>Гадаад, дотоод урт, савны гүн</td>
+                    <td>Нимгэн утасны диаметр, хуудасны зузаан</td>
+                </tr>
+                <tr>
+                    <td><strong>Гол онцлог хэсэг</strong></td>
+                    <td>Нониусын хөдөлгөөнт хуваарь</td>
+                    <td>Түжигч хүрд (Ratchet stop)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>💡 Сурагчдын гаргадаг түгээмэл 3 алдаа:</h3>
+        <ol>
+            <li><strong>Микрометрийг хэт чангалах:</strong> Эргүүлгийг хүчээр чангалбал багажийн эрээс гэмтэнэ. Заавал <i>Ratchet stop</i> хэсгээс барьж 2-3 удаа "чык-чык" хийх чимээ гартал эргүүлнэ.</li>
+            <li><strong>Микрометрийн 0.5 мм-ийн доод зураасыг анзаарахгүй орхих:</strong> Стебель дээр 0.5 мм-ийн доод зураас цухуйсан эсэхийг сайтар нягтлах хэрэгтэй.</li>
+            <li><strong>Нониусын 0 зураасыг биш, ирмэгийг харах:</strong> Штангенциркуль дээр заалт уншихдаа нониусын эхлэх ирмэгийг биш, <strong>0 гэсэн зураасыг</strong> гол заагч болгоно.</li>
+        </ol>
+    </div>
+</div>
+
+<!-- TAB 5: QUIZ -->
+<div class="tab-content" id="tab-4">
+    <h2>✍️ 5. Мэдлэг шалгах сорил (5 асуулт)</h2>
+
+    <div class="card">
+        <div class="student-info-box">
+            <input type="text" id="studentName" placeholder="Сурагчийн бүтэн нэр" required>
+            <input type="text" id="studentClass" placeholder="Анги бүлэг (Д/з: 7А)" required>
+        </div>
+
+        <form id="quizForm">
+            <!-- Question 1 -->
+            <div style="margin-bottom: 20px;">
+                <p><strong>1. Микрометрийн ердийн нарийвчлал хэд байдаг вэ?</strong></p>
+                <label class="quiz-opt" id="opt-q1-a"><input type="radio" name="q1" value="a"> A) 1 мм</label>
+                <label class="quiz-opt" id="opt-q1-b"><input type="radio" name="q1" value="b"> B) 0.1 мм</label>
+                <label class="quiz-opt" id="opt-q1-c"><input type="radio" name="q1" value="c"> C) 0.01 мм</label>
+            </div>
+
+            <!-- Question 2 -->
+            <div style="margin-bottom: 20px;">
+                <p><strong>2. Микрометрээр хэмжихдээ биеийг хэт шахаж деформацид оруулхаас сэргийлдэг хэсэг юу вэ?</strong></p>
+                <label class="quiz-opt" id="opt-q2-a"><input type="radio" name="q2" value="a"> A) Түжигч хүрд (Ratchet stop)</label>
+                <label class="quiz-opt" id="opt-q2-b"><input type="radio" name="q2" value="b"> B) Эх бие (Frame)</label>
+                <label class="quiz-opt" id="opt-q2-c"><input type="radio" name="q2" value="c"> C) Түгжээ (Lock nut)</label>
+            </div>
+
+            <!-- Question 3 -->
+            <div style="margin-bottom: 20px;">
+                <p><strong>3. Аяганы дотоод диаметрийн хэмжээг авахад аль багаж тохиромжтой вэ?</strong></p>
+                <label class="quiz-opt" id="opt-q3-a"><input type="radio" name="q3" value="a"> A) Микрометр</label>
+                <label class="quiz-opt" id="opt-q3-b"><input type="radio" name="q3" value="b"> B) Штангенциркуль</label>
+                <label class="quiz-opt" id="opt-q3-c"><input type="radio" name="q3" value="c"> C) Энгийн метрийн шугам</label>
+            </div>
+
+            <!-- Question 4 -->
+            <div style="margin-bottom: 20px;">
+                <p><strong>4. Микрометрийн стебель дээр 5.5 мм ба барабан дээр 22 давхцсан бол хэмжээ хэд вэ?</strong></p>
+                <label class="quiz-opt" id="opt-q4-a"><input type="radio" name="q4" value="a"> A) 5.72 мм</label>
+                <label class="quiz-opt" id="opt-q4-b"><input type="radio" name="q4" value="b"> B) 5.22 мм</label>
+                <label class="quiz-opt" id="opt-q4-c"><input type="radio" name="q4" value="c"> C) 5.522 мм</label>
+            </div>
+
+            <!-- Question 5 -->
+            <div style="margin-bottom: 20px;">
+                <p><strong>5. Нониусын хуваарь нь 20 хэсэгт хуваагдсан штангенциркулийн нарийвчлал хэд вэ?</strong></p>
+                <label class="quiz-opt" id="opt-q5-a"><input type="radio" name="q5" value="a"> A) 0.05 мм</label>
+                <label class="quiz-opt" id="opt-q5-b"><input type="radio" name="q5" value="b"> B) 0.1 мм</label>
+                <label class="quiz-opt" id="opt-q5-c"><input type="radio" name="q5" value="c"> C) 0.2 мм</label>
+            </div>
+
+            <button type="button" class="btn" onclick="checkQuiz()">Дүнг шалгах ба Багшид илгээх</button>
+        </form>
+
+        <div id="quizResult" style="margin-top: 20px;"></div>
+        <div id="sendContainer"></div>
+    </div>
+</div>
+
+<footer>
+    <p>© Интерактив физикийн хичээл | Бэлтгэсэн: Цаст-Алтай сургуулийн физикийн багш М.Амгалан</p>
+</footer>
+
+<script>
+    const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyFZF7iFDG22SXt9Xz43RGKmC6ZzO8x6KTRbpIGf9S4x4GE6nZnJBISj0x_TzLT6qom/exec';
+    const CURRENT_LESSON_SHEET = '7_Штангенциркуль_Микрометр';
+    const LOCAL_STORAGE_KEY = 'physics7_caliper_submitted';
+
+    document.addEventListener('DOMContentLoaded', () => {
+        checkSubmissionStatus();
+    });
+
+    function checkSubmissionStatus() {
+        if (localStorage.getItem(LOCAL_STORAGE_KEY) === 'true') {
+            lockQuizUI();
+            const res = document.getElementById('quizResult');
+            res.innerHTML = `<p style="color: #dc2626; font-weight: bold;">🔒 Та энэ хичээлийн сорилыг өгсөн байна. Дахин өгөх боломжгүй.</p>`;
+        }
+    }
+
+    function lockQuizUI() {
+        document.getElementById('studentName').disabled = true;
+        document.getElementById('studentClass').disabled = true;
+        document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+        const btn = document.querySelector('.btn');
+        if (btn) {
+            btn.disabled = true;
+            btn.style.backgroundColor = '#94a3b8';
+            btn.innerText = '🔒 Сорил илгээгдсэн';
+        }
+    }
+
+    function switchTab(idx) {
+        const tabs = document.querySelectorAll('.nav-tabs li');
+        const contents = document.querySelectorAll('.tab-content');
+        tabs.forEach((t, i) => {
+            t.classList.toggle('active', i === idx);
+            contents[i].classList.toggle('active', i === idx);
+        });
+    }
+
+    const answers = { q1: 'c', q2: 'a', q3: 'b', q4: 'a', q5: 'a' };
+
+    function checkQuiz() {
+        if (localStorage.getItem(LOCAL_STORAGE_KEY) === 'true') return;
+
+        const name = document.getElementById('studentName').value.trim();
+        const studentClass = document.getElementById('studentClass').value.trim();
+
+        if (!name || !studentClass) {
+            alert('Нэр ба анги бүлгээ оруулна уу!');
+            return;
+        }
+
+        let score = 0;
+        let missedTopics = [];
+        resetStyles();
+
+        for (let i = 1; i <= 5; i++) {
+            const qKey = 'q' + i;
+            const correctVal = answers[qKey];
+            const correctOpt = document.getElementById(`opt-${qKey}-${correctVal}`);
+            const userChoice = document.querySelector(`input[name="${qKey}"]:checked`);
+
+            if (correctOpt) {
+                correctOpt.classList.add('correct');
+            }
+
+            if (userChoice && userChoice.value === correctVal) {
+                score++;
+            } else {
+                if (userChoice) {
+                    const wrongOpt = document.getElementById(`opt-${qKey}-${userChoice.value}`);
+                    if (wrongOpt) wrongOpt.classList.add('wrong');
+                }
+
+                // Оношилгооны сэдэв холбох
+                if (i === 1 || i === 5) missedTopics.push('Багажийн нарийвчлал ба хуваарь');
+                else if (i === 2 || i === 3) missedTopics.push('Багажийн бүтэц ба тохиромжтой ашиглалт');
+                else if (i === 4) missedTopics.push('Хэмжилтийн заалт унших тооцоолол');
+            }
+        }
+
+        const percentage = (score / 5) * 100;
+        const uniqueMissed = [...new Set(missedTopics)];
+
+        const res = document.getElementById('quizResult');
+        res.style.fontSize = '1.1rem';
+        res.style.fontWeight = 'bold';
+        res.style.color = score >= 4 ? '#16a34a' : '#dc2626';
+        
+        let feedbackHTML = `Үр дүн: <strong>${name}</strong> - <strong>${score}/5</strong> (${percentage}%)`;
+        if (uniqueMissed.length > 0) {
+            feedbackHTML += `<br><span style="color: #dc2626; font-size: 0.95rem;">Давтвал зохих агуулга: ${uniqueMissed.join(', ')}</span>`;
+        } else {
+            feedbackHTML += `<br><span style="color: #16a34a; font-size: 0.95rem;">🎉 Баяр хүргэе! Хэмжих багажийн талаар бүрэн ойлгожээ.</span>`;
+        }
+        res.innerHTML = feedbackHTML;
+
+        document.getElementById('sendContainer').innerHTML = `<div class="status-badge status-success" id="statusMessage">📤 Дүнг багш руу илгээж байна...</div>`;
+
+        localStorage.setItem(LOCAL_STORAGE_KEY, 'true');
+        lockQuizUI();
+
+        fetch(GOOGLE_APP_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+                sheetName: CURRENT_LESSON_SHEET,
+                name: name,
+                studentClass: studentClass,
+                score: score,
+                percentage: percentage,
+                missedTopics: uniqueMissed.length > 0 ? uniqueMissed.join(' | ') : 'Ойлгоогүй зүйл байхгүй',
+                timestamp: new Date().toLocaleString()
+            })
+        }).then(() => {
+            document.getElementById('statusMessage').innerText = '✅ Таны дүн "7_Штангенциркуль_Микрометр" шийт рүү амжилттай бүртгэгдлээ!';
+        });
+    }
+
+    function resetStyles() {
+        const allOpts = document.querySelectorAll('.quiz-opt');
+        allOpts.forEach(opt => {
+            opt.classList.remove('correct', 'wrong');
+        });
+    }
+</script>
+
+</body>
+</html>
