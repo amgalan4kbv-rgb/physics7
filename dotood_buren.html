@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дотоод бүрэн ойлт - 9-р анги</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e0f2fe; /* Цайвар цэнхэр арын фон */
+        }
+        .tab-active { background-color: #ef4444; color: white; }
+        .tab-inactive { background-color: #f1f5f9; color: #475569; }
+        .tab-inactive:hover { background-color: #e2e8f0; color: #0f172a; }
+        .law-card {
+            border-left: 4px solid #ef4444;
+            background-color: #f8fafc;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen pb-10">
+
+    <!-- HEADER: Сургууль, багшийн нэрийг цэвэр бичвэрээр оруулсан хэсэг -->
+    <header class="bg-white/90 backdrop-blur border-b border-sky-200 p-6 shadow-sm">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            
+            <!-- Сургуулийн нэр -->
+            <div>
+                <h2 class="text-base uppercase tracking-wider text-red-600 font-bold">Цаст-Алтай сургууль</h2>
+                <p class="text-xs text-slate-500">Физикийн хичээл</p>
+            </div>
+
+            <!-- Хичээлийн сэдэв ба анги -->
+            <div class="text-center">
+                <h1 class="text-2xl sm:text-3xl font-bold text-red-600">Гэрлийн дотоод бүрэн ойлт</h1>
+                <p class="mt-1 text-slate-600 font-light text-sm">9-р анги | Гэрлийн хугарлын онцгой тохиолдол</p>
+            </div>
+
+            <!-- Багшийн мэдээлэл -->
+            <div class="text-center md:text-right">
+                <p class="text-xs text-slate-500">Бэлтгэсэн багш:</p>
+                <p class="text-base font-bold text-slate-800">М.Амгалан</p>
+            </div>
+
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto mt-8 px-4">
+        
+        <!-- Цэс -->
+        <div class="flex justify-center space-x-2 mb-6">
+            <button onclick="showTab('theory')" id="btn-theory" class="tab-active px-6 py-2 rounded-t-lg font-bold transition-all shadow-sm">1. Онол ба Үзэгдэл</button>
+            <button onclick="showTab('experiment')" id="btn-experiment" class="tab-inactive px-6 py-2 rounded-t-lg font-bold transition-all shadow-sm">2. Интерактив туршилт</button>
+            <button onclick="showTab('quiz')" id="btn-quiz" class="tab-inactive px-6 py-2 rounded-t-lg font-bold transition-all shadow-sm">3. Сорил (10)</button>
+        </div>
+
+        <div class="bg-white p-6 sm:p-8 rounded-b-lg rounded-t-lg shadow-xl border-t-4 border-red-500 min-h-[500px]">
+            
+            <!-- 1. ОНОЛ БА ҮЗЭГДЭЛ -->
+            <div id="theory" class="block space-y-8">
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-red-600 border-b border-sky-100 pb-2 mb-4 font-bold">Гэрлийн дотоод бүрэн ойлт гэж юу вэ?</h2>
+                    <p class="text-lg leading-relaxed text-slate-700">
+                        Гэрэл оптик нягт ихтэй орчноос (жишээ нь ус эсвэл шил) оптик нягт багатай орчин руу (агаар) нэвтрэхдээ нормалиас холдож хугардаг. Тусгалын өнцгийг ихэсгэхэд хугарлын өнцөг дагаж ихэссээр хамгийн ихдээ 90° болох бөгөөд энэ үеийн тусгалын өнцгийг <strong>хугарлын хязгаарын өнцөг (θ₀)</strong> гэнэ.
+                    </p>
+                    <p class="text-lg leading-relaxed text-slate-700">
+                        Хэрэв тусгалын өнцгийг хязгаарын өнцгөөс улам ихэсгэвэл гэрэл хоёр дахь орчин руу огт нэвтрэхгүй, хилийн заагаас бүхэлдээ анхны орчиндоо буцаж ойх бөгөөд үүнийг <strong>гэрлийн дотоод бүрэн ойлт</strong> гэнэ.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
+                            <h3 class="font-bold text-red-600 mb-2">Үүсэх үндсэн 2 нөхцөл:</h3>
+                            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
+                                <li><strong>Нөхцөл 1:</strong> Гэрэл заавал оптик нягт ихтэй орчноос багатай орчин руу чиглэсэн байх (n₁ &gt; n₂).</li>
+                                <li><strong>Нөхцөл 2:</strong> Тусгалын өнцөг нь тухайн орчны хязгаарын өнцгөөс их байх (θi &gt; θ₀).</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
+                            <h3 class="font-bold text-blue-600 mb-2">Орчны хязгаарын өнцгүүд (Агаарт гарах үед):</h3>
+                            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-1">
+                                <li>Ус (n ≈ 1.33): θ₀ ≈ 48.8°</li>
+                                <li>Шил (n ≈ 1.50): θ₀ ≈ 41.8°</li>
+                                <li>Алмаз (n ≈ 2.42): θ₀ ≈ 24.4°</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ОНОЛЫН ДИАГРАММ ЗУРАГ -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-red-600 border-b border-sky-100 pb-2">Уртын дагуух 3 шатлалт үзэгдэл</h2>
+                    <p class="text-slate-700">Тусгалын өнцөг өөрчлөгдөхөд гэрлийн замын төлөв хэрхэн шилждэгийг доорх зургаас харна уу:</p>
+                    
+                    <div class="flex flex-col items-center bg-slate-900 p-6 rounded-xl border border-slate-700 shadow-inner">
+                        <svg viewBox="0 0 540 240" width="100%" height="240" class="max-w-[500px]">
+                            <!-- Орчны зааг хавтгай -->
+                            <rect x="0" y="100" width="540" height="140" fill="#1e293b" opacity="0.4"/>
+                            <line x1="0" y1="100" x2="540" y2="100" stroke="#38bdf8" stroke-width="2"/>
+                            
+                            <text x="20" y="80" fill="#94a3b8" font-size="12" font-weight="bold">Агаар (n₂ - бага)</text>
+                            <text x="20" y="130" fill="#38bdf8" font-size="12" font-weight="bold">Ус эсвэл Шил (n₁ - их)</text>
+
+                            <!-- Нормаль шугамууд -->
+                            <line x1="100" y1="20" x2="100" y2="220" stroke="#64748b" stroke-dasharray="4,4"/>
+                            <line x1="270" y1="20" x2="270" y2="220" stroke="#64748b" stroke-dasharray="4,4"/>
+                            <line x1="440" y1="20" x2="440" y2="220" stroke="#64748b" stroke-dasharray="4,4"/>
+
+                            <!-- ТӨЛӨВ 1: Хугарал -->
+                            <line x1="40" y1="190" x2="100" y2="100" stroke="#ef4444" stroke-width="2.5"/>
+                            <polygon points="-5,-4 5,0 -5,4" fill="#ef4444" transform="translate(70,145) rotate(-56.31)"/>
+                            <line x1="100" y1="100" x2="170" y2="30" stroke="#10b981" stroke-width="2.5"/>
+                            <polygon points="-5,-4 5,0 -5,4" fill="#10b981" transform="translate(135,65) rotate(-45)"/>
+                            <text x="100" y="235" fill="#94a3b8" font-size="10" text-anchor="middle">1. Хугарал (θi &lt; θ₀)</text>
+
+                            <!-- ТӨЛӨВ 2: Хязгаарын өнцөг -->
+                            <line x1="190" y1="190" x2="270" y2="100" stroke="#ef4444" stroke-width="2.5"/>
+                            <polygon points="-5,-4 5,0 -5,4" fill="#ef4444" transform="translate(230,145) rotate(-48.37)"/>
+                            <line x1="270" y1="100" x2="380" y2="100" stroke="#eab308" stroke-width="3"/>
+                            <polygon points="-5,-4 5,0 -5,4" fill="#eab308" transform="translate(325,100)"/>
+                            <text x="270" y="235" fill="#eab308" font-size="10" text-anchor="middle" font-weight="bold">2. Хязгаарын өнцөг (θi = θ₀)</text>
+                            <!-- Тэгш өнцгийн тэмдэглэгээ -->
+                            <rect x="270" y="80" width="10" height="10" fill="none" stroke="#eab308" stroke-width="1"/>
+
+                            <!-- ТӨЛӨВ 3: Дотоод бүрэн ойлт -->
+                            <line x1="350" y1="190" x2="440" y2="100" stroke="#ef4444" stroke-width="2.5"/>
+                            <polygon points="-5,-4 5,0 -5,4" fill="#ef4444" transform="translate(395,145) rotate(-45)"/>
+                            <line x1="440" y1="100" x2="530" y2="190" stroke="#ef4444" stroke-width="2.5"/>
+                            <polygon points="-5,-4 5,0 -5,4" fill="#ef4444" transform="translate(485,145) rotate(45)"/>
+                            <text x="440" y="235" fill="#ef4444" font-size="10" text-anchor="middle" font-weight="bold">3. Бүрэн ойлт (θi &gt; θ₀)</text>
+                        </svg>
+                    </div>
+                </section>
+
+                <!-- ХЭРЭГЛЭЭ, АМЬДРАЛ ДЭЭРХ ҮЗЭГДЛҮҮД -->
+                <section class="space-y-4 pt-6 border-t border-sky-100">
+                    <h2 class="text-2xl font-bold text-red-600 pb-2">Дотоод бүрэн ойлтын амьдрал дээрх хэрэглээ</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                        <div class="bg-sky-50 p-4 rounded-xl border border-sky-200">
+                            <h3 class="font-bold text-red-600 text-base mb-2">1. Шилэн кабель (Fiber Optics)</h3>
+                            <p class="text-slate-700">Орчин үеийн өндөр хурдны интернэтийн кабелийн доторх гэрлийн цацраг нь шилэн ханыг даган тасралтгүй дотоод бүрэн ойлт хийж, маш хол зайд ямар ч алдагдалгүй мэдээллийг дамжуулдаг.</p>
+                        </div>
+                        <div class="bg-sky-50 p-4 rounded-xl border border-sky-200">
+                            <h3 class="font-bold text-red-600 text-base mb-2">2. Зэрэглээ (Mirage)</h3>
+                            <p class="text-slate-700">Халуун өдөр замын гадаргуу дээр ус байгаа мэт харагдадаг нь агаарын доод давхарга маш их халахад нягт нь буурч, дээрээс туссан тэнгэрийн гэрэл доороос дээш дотоод бүрэн ойлтоор ойж бидэнд ирдэгтэй холбоотой.</p>
+                        </div>
+                        <div class="bg-sky-50 p-4 rounded-xl border border-sky-200">
+                            <h3 class="font-bold text-red-600 text-base mb-2">3. Алмазны гялалзах нууц</h3>
+                            <p class="text-slate-700">Алмаз нь гэрлийн хугарлын илтгэгч маш өндөртэй (n = 2.42) тул хязгаарын өнцөг нь ердөө л 24.4° байдаг. Иймээс алмаз дотор орсон гэрэл гадагш гаралгүй олон дахин бүрэн ойлт хийж маш гоёмсог гялалздаг.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 2. ИНТЕРАКТИВ ТУРШИЛТ -->
+            <div id="experiment" class="hidden space-y-6">
+                <div class="bg-sky-50 p-4 sm:p-6 rounded-xl border border-sky-200 shadow-sm">
+                    <div class="flex flex-col lg:flex-row items-center justify-between mb-6 gap-6">
+                        <!-- Хяналтын хэсэг -->
+                        <div class="flex flex-wrap items-center gap-6 w-full lg:w-auto">
+                            <div class="flex items-center gap-2">
+                                <label class="font-bold text-slate-700 text-sm">Орчин сонгох (Доод):</label>
+                                <select id="mediaSelect" onchange="changeMedia()" class="bg-white border-2 border-red-500 rounded-lg p-2 text-sm font-bold text-slate-800 focus:outline-none">
+                                    <option value="water">Ус (n = 1.33, θ₀ ≈ 48.8°)</option>
+                                    <option value="glass">Шил (n = 1.50, θ₀ ≈ 41.8°)</option>
+                                    <option value="diamond">Алмаз (n = 2.42, θ₀ ≈ 24.4°)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Слайдер ба өнцгийн утга -->
+                        <div class="flex items-center gap-4 w-full lg:w-1/2">
+                            <label class="font-bold text-slate-700 text-sm whitespace-nowrap">Тусгалын өнцөг (∠θi):</label>
+                            <input type="range" id="expSlider" min="0" max="85" value="35" class="flex-grow">
+                            <div id="angleValueDisplay" class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-xl min-w-[70px] text-center shadow-md">35°</div>
+                        </div>
+                    </div>
+
+                    <!-- Симуляцийн самбар -->
+                    <div class="relative bg-slate-950 rounded-2xl overflow-hidden border-8 border-slate-800 shadow-2xl flex justify-center items-center">
+                        <canvas id="tirCanvas" width="760" height="420" class="w-full h-auto"></canvas>
+                        
+                        <div id="laserGun" class="absolute pointer-events-none origin-right z-20" style="width: 100px; height: 34px;">
+                            <svg viewBox="0 0 100 34">
+                                <rect x="10" y="7" width="70" height="20" rx="3" fill="#ef4444"/>
+                                <rect x="0" y="2" width="15" height="30" rx="2" fill="#1e293b"/>
+                                <rect x="80" y="10" width="10" height="14" fill="#64748b"/>
+                                <circle cx="75" cy="17" r="3" fill="#ef4444" class="animate-pulse"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 bg-white rounded-xl border border-sky-200 text-center text-sm text-slate-800 shadow-sm">
+                        <span id="experimentStatus" class="font-bold"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. СОРИЛ -->
+            <div id="quiz" class="hidden space-y-6">
+                <div id="quiz-container" class="space-y-8"></div>
+                <div class="flex justify-center mt-8">
+                    <button onclick="calculateScore()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-10 rounded-full shadow-lg transition-transform active:scale-95">Дүнгээ үзэх</button>
+                </div>
+                <div id="quiz-result" class="hidden mt-10 p-10 rounded-3xl text-center shadow-2xl border-4"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function showTab(tabId) {
+            ['theory', 'experiment', 'quiz'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            ['btn-theory', 'btn-experiment', 'btn-quiz'].forEach(id => document.getElementById(id).classList.replace('tab-active', 'tab-inactive'));
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById('btn-' + tabId).classList.replace('tab-inactive', 'tab-active');
+            if (tabId === 'experiment') {
+                setTimeout(initSimulation, 50);
+            }
+        }
+
+        // --- ИНТЕРАКТИВ СИМУЛЯЦИЙН СИСТЕМ ---
+        let canvas, ctx;
+        let selectedMedia = 'water';
+
+        function initSimulation() {
+            canvas = document.getElementById('tirCanvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+            
+            document.getElementById('expSlider').addEventListener('input', updateSim);
+            updateSim();
+        }
+
+        function changeMedia() {
+            selectedMedia = document.getElementById('mediaSelect').value;
+            updateSim();
+        }
+
+        function drawArrowOnLine(x1, y1, x2, y2, color) {
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+            const midX = (x1 + x2) / 2;
+            const midY = (y1 + y2) / 2;
+            
+            ctx.save();
+            ctx.translate(midX, midY);
+            ctx.rotate(angle);
+            ctx.fillStyle = color;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = color;
+            
+            ctx.beginPath();
+            ctx.moveTo(6, 0);
+            ctx.lineTo(-8, -6);
+            ctx.lineTo(-3, 0);
+            ctx.lineTo(-8, 6);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function updateSim() {
+            if (!canvas) return;
+            const w = canvas.width, h = canvas.height;
+            const originX = w / 2;
+            const originY = h / 2 - 30;
+
+            const angleDeg = parseInt(document.getElementById('expSlider').value);
+            const angleRad = angleDeg * Math.PI / 180;
+            
+            document.getElementById('angleValueDisplay').innerText = angleDeg + '°';
+
+            let n1 = 1.33; 
+            let mediaName = "Ус";
+            if (selectedMedia === 'glass') { n1 = 1.50; mediaName = "Шил"; }
+            if (selectedMedia === 'diamond') { n1 = 2.42; mediaName = "Алмаз"; }
+            const n2 = 1.0; 
+
+            const critAngleRad = Math.asin(n2 / n1);
+            const critAngleDeg = (critAngleRad * 180 / Math.PI).toFixed(1);
+
+            ctx.clearRect(0, 0, w, h);
+
+            ctx.fillStyle = '#0f172a'; 
+            ctx.fillRect(0, 0, w, originY);
+            
+            ctx.fillStyle = 'rgba(56, 189, 248, 0.15)'; 
+            ctx.fillRect(0, originY, w, h - originY);
+
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(0, originY); ctx.lineTo(w, originY); ctx.stroke();
+
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.setLineDash([5, 10]);
+            ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.moveTo(originX, 20); ctx.lineTo(originX, h - 20); ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = 'bold 12px sans-serif';
+            ctx.fillText("Агаар (n = 1.0)", 40, 40);
+            ctx.fillText(`${mediaName} (n = ${n1})`, 40, h - 40);
+
+            const rayLen = 500;
+            const inX = originX - Math.sin(angleRad) * 230;
+            const inY = originY + Math.cos(angleRad) * 230;
+
+            ctx.lineWidth = 3.5;
+            ctx.strokeStyle = '#ef4444'; 
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = '#ef4444';
+            ctx.beginPath(); ctx.moveTo(inX, inY); ctx.lineTo(originX, originY); ctx.stroke();
+            
+            drawArrowOnLine(inX, inY, originX, originY, '#ef4444');
+
+            let statusText = "";
+
+            if (angleDeg < parseFloat(critAngleDeg)) {
+                const sinR = (n1 * Math.sin(angleRad)) / n2;
+                const rRad = Math.asin(sinR);
+                const rDeg = (rRad * 180 / Math.PI).toFixed(1);
+
+                const outX = originX + Math.sin(rRad) * 230;
+                const outY = originY - Math.cos(rRad) * 230;
+
+                ctx.strokeStyle = '#eab308';
+                ctx.shadowColor = '#eab308';
+                ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(outX, outY); ctx.stroke();
+                
+                drawArrowOnLine(originX, originY, outX, outY, '#eab308');
+
+                ctx.strokeStyle = 'rgba(239, 68, 68, 0.3)';
+                ctx.shadowColor = 'rgba(239, 68, 68, 0.2)';
+                ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(originX + Math.sin(angleRad) * 230, originY + Math.cos(angleRad) * 230); ctx.stroke();
+
+                statusText = `Гэрлийн цацраг агаарт хугарч байна. Тусгалын өнцөг ∠θi = ${angleDeg}°, Хугарлын өнцөг ∠θr = ${rDeg}°`;
+                document.getElementById('experimentStatus').className = "text-yellow-600 font-bold";
+            } 
+            else if (Math.abs(angleDeg - Math.round(critAngleDeg)) <= 1) {
+                ctx.strokeStyle = '#10b981';
+                ctx.shadowColor = '#10b981';
+                ctx.lineWidth = 4.5;
+                ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(originX + 230, originY); ctx.stroke();
+                
+                drawArrowOnLine(originX, originY, originX + 230, originY, '#10b981');
+
+                statusText = `Хязгаарын өнцөг! Тусгалын өнцөг ∠θi = ${angleDeg}° (≈${critAngleDeg}°), Хугарлын өнцөг ∠θr = 90° болж хилийн заагийн дагуу тарна.`;
+                document.getElementById('experimentStatus').className = "text-emerald-600 font-bold";
+            } 
+            else {
+                const outX = originX + Math.sin(angleRad) * 230;
+                const outY = originY + Math.cos(angleRad) * 230;
+
+                ctx.strokeStyle = '#ef4444';
+                ctx.shadowColor = '#ef4444';
+                ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(outX, outY); ctx.stroke();
+                
+                drawArrowOnLine(originX, originY, outX, outY, '#ef4444');
+
+                statusText = `ДОТООД БҮРЭН ОЙЛТ! Тусгалын өнцөг хязгаарын өнцгөөс их байна (∠θi = ${angleDeg}° > ${critAngleDeg}°). Гэрэл агаарт огт нэвтрэхгүй бүрэн ойж байна.`;
+                document.getElementById('experimentStatus').className = "text-red-600 font-bold font-extrabold";
+            }
+
+            ctx.shadowBlur = 0;
+
+            if (angleDeg > 4) {
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.arc(originX, originY, 50, Math.PI/2 - angleRad, Math.PI/2);
+                ctx.strokeStyle = '#ef4444';
+                ctx.stroke();
+                ctx.fillStyle = '#ef4444';
+                ctx.fillText(`θi`, originX - 18, originY + 70);
+            }
+
+            const laserGun = document.getElementById('laserGun');
+            laserGun.style.left = `calc(50% - ${Math.sin(angleRad) * 230}px - 50px)`;
+            laserGun.style.top = `calc(${originY}px + ${Math.cos(angleRad) * 230}px - 17px)`;
+            laserGun.style.transform = `rotate(${-angleDeg + 270}deg)`;
+
+            document.getElementById('experimentStatus').innerText = statusText;
+        }
+
+        // --- СОРИЛЫН АСУУЛТУУД (10 даалгавар) ---
+        const quizQuestions = [
+            { 
+                q: "1. Дотоод бүрэн ойлт явагдах хамгийн эхний гол нөхцөл юу вэ?", 
+                options: [
+                    "Гэрэл агаараас шил рүү орох", 
+                    "Гэрэл оптик нягт ихтэй орчноос багатай руу орох", 
+                    "Тусгалын өнцөг үргэлж 90 градус байх", 
+                    "Орчны нягтууд яг тэнцүү байх"
+                ], 
+                correct: 1 
+            },
+            { 
+                q: "2. Гэрэл хугарлын хязгаарын өнцгөөр тусах үед хугарлын өнцөг ∠θr хэдэн градус байдаг вэ?", 
+                options: ["0°", "45°", "90°", "180°"], 
+                correct: 2 
+            },
+            { 
+                q: "3. Уснаас агаарт гэрэл гарахад хязгаарын өнцөг ∠θ₀ ойролцоогоор хэдэн градус байдаг вэ?", 
+                options: ["24.4°", "41.8°", "48.8°", "90°"], 
+                correct: 2 
+            },
+            { 
+                q: "4. Алмаз эрдэнийн хязгаарын өнцөг маш бага (24.4°) байдгийн гол шалтгаан юу вэ?", 
+                options: [
+                    "Оптик хугарлын илтгэгч (нягт) нь маш өндөр байдаг тул", 
+                    "Дотроо усан суурьтай байдаг тул", 
+                    "Маш хатуу биет учраас гэрлийг шингээдэг", 
+                    "Гэрлийн хурд алмаз дотор хамгийн их байдаг тул"
+                ], 
+                correct: 0 
+            },
+            { 
+                q: "5. Шилэн кабелийн (Fiber Optics) доторх гэрэл ямар замаар алдагдалгүй тархдаг вэ?", 
+                options: [
+                    "Шулуун шугамын дагуу хугаралгүй нэвтэрч", 
+                    "Кабелийн хананд тасралтгүй дотоод бүрэн ойлт хийж", 
+                    "Гэрэл шингээлтийн үр дүнд хүчээ нэмж", 
+                    "Толин ойлтын ачаар гадагш цацарч"
+                ], 
+                correct: 1 
+            },
+            { 
+                q: "6. Халуун цөл болон засмал зам дээр зэрэглээ (Mirage) харагдах нь ямар үзэгдэл вэ?", 
+                options: [
+                    "Агаар дахь усны уурын ойлт", 
+                    "Халуун агаарын давхаргуудад гэрэл дотоод бүрэн ойлт хийх үзэгдэл", 
+                    "Гэрлийн бүрэн шингээлт", 
+                    "Нүдний оптик хуурамч харагдац (төөрөгдөл)"
+                ], 
+                correct: 1 
+            },
+            { 
+                q: "7. Гэрэл уснаас (n = 1.33) агаарт гарах үед тусгалын өнцөг 55° байвал гэрэл хэрхэх вэ?", 
+                options: [
+                    "Хугарч агаарт гарна", 
+                    "90 градусаар хугарч хилийн дагуу тарна", 
+                    "Дотоод бүрэн ойлт хийж ус руугаа буцаж ойно", 
+                    "Усандаа бүрэн шингэж замхарна"
+                ], 
+                correct: 2
+            },
+            { 
+                q: "8. Зурагт үзүүлсэн цацрагуудын аль нь дотоод бүрэн ойлтыг зөв харуулсан бэ?", 
+                svg: `<svg width="180" height="100" viewBox="0 0 180 100">
+                    <line x1="10" y1="50" x2="170" y2="50" stroke="#0284c7" stroke-width="2"/>
+                    <line x1="90" y1="10" x2="90" y2="90" stroke="gray" stroke-dasharray="3"/>
+                    <line x1="40" y1="80" x2="90" y2="50" stroke="#dc2626" stroke-width="2"/>
+                    <line x1="90" y1="50" x2="140" y2="80" stroke="#dc2626" stroke-width="2"/>
+                    <text x="145" y="85" font-size="10" fill="#dc2626" font-weight="bold">А</text>
+                    <line x1="90" y1="50" x2="160" y2="50" stroke="#d97706" stroke-width="2"/>
+                    <text x="165" y="45" font-size="10" fill="#d97706" font-weight="bold">B</text>
+                    <line x1="90" y1="50" x2="130" y2="15" stroke="#16a34a" stroke-width="2"/>
+                    <text x="135" y="15" font-size="10" fill="#16a34a" font-weight="bold">C</text>
+                </svg>`,
+                options: ["А цацраг", "B цацраг", "C цацраг", "Аль нь ч биш"], 
+                correct: 0 
+            },
+            { 
+                q: "9. Дотоод бүрэн ойлт явагдахад гэрэл хоёр дахь орчинд хэрхэн нэвтэрдэг вэ?", 
+                options: [
+                    "Бүрэн нэвтэрч хугарна", 
+                    "Огт нэвтрэхгүй, бүгд буцаж ойно", 
+                    "Эрчим нь 2 дахин суларч нэвтэрнэ", 
+                    "Хагасаас илүү хувь нь нэвтэрнэ"
+                ], 
+                correct: 1 
+            },
+            { 
+                q: "10. Орчны хугарлын илтгэгч (нягт) ихсэх тусам тухайн орчны хязгаарын өнцөг ∠θ₀ хэрхэн өөрчлөгдөх вэ?", 
+                options: [
+                    "Ихэснэ", 
+                    "Багасна", 
+                    "Өөрчлөгдөхгүй тогтмол байна", 
+                    "Эхлээд ихсэж дараа нь багасна"
+                ], 
+                correct: 1
+            }
+        ];
+
+        let userAnswers = new Array(quizQuestions.length).fill(null);
+
+        function checkAns(qIdx, optIdx, btn) {
+            userAnswers[qIdx] = optIdx;
+            const parent = document.getElementById(`q-opts-${qIdx}`);
+            Array.from(parent.children).forEach(child => {
+                child.classList.remove('bg-red-600', 'text-white', 'border-red-600');
+                child.classList.add('bg-white', 'text-slate-700');
+            });
+            btn.classList.remove('bg-white', 'text-slate-700');
+            btn.classList.add('bg-red-600', 'text-white', 'border-red-600');
+        }
+
+        function calculateScore() {
+            let score = 0;
+            quizQuestions.forEach((q, i) => { if (userAnswers[i] === q.correct) score++; });
+            const resultDiv = document.getElementById('quiz-result');
+            resultDiv.classList.remove('hidden');
+            let gradeColor = score >= 8 ? 'bg-emerald-50 border-emerald-400' : (score >= 5 ? 'bg-amber-50 border-amber-400' : 'bg-red-50 border-red-400');
+            let textColor = score >= 8 ? 'text-emerald-700' : (score >= 5 ? 'text-amber-700' : 'text-red-700');
+            resultDiv.className = `mt-10 p-10 rounded-3xl text-center shadow-2xl border-4 ${gradeColor}`;
+            resultDiv.innerHTML = `
+                <h2 class="text-3xl font-extrabold ${textColor} mb-4">Таны оноо: ${score} / ${quizQuestions.length}</h2>
+                <p class="text-xl text-slate-700 mb-6">${score === 10 ? "Гайхалтай! Та сэдвээ бүрэн эзэмшжээ." : (score >= 5 ? "Сайн байна, дутуугаа онолын хэсгээс дахин бататгаарай!" : "Онолоо дахин уншиж, туршилтыг идэвхтэй ажиллуулаарай.")}</p>
+                <button onclick="location.reload()" class="bg-slate-800 hover:bg-slate-700 text-white px-8 py-3 rounded-full font-bold transition-colors">Дахин эхлэх</button>
+            `;
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function initQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            quizQuestions.forEach((q, idx) => {
+                const div = document.createElement('div');
+                div.className = "p-6 bg-sky-50 rounded-2xl border border-sky-200 shadow-sm";
+                div.innerHTML = `
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold mb-4 text-slate-800">${q.q}</h3>
+                            <div class="grid grid-cols-1 gap-3" id="q-opts-${idx}">
+                                ${q.options.map((opt, i) => `
+                                    <button onclick="checkAns(${idx},${i}, this)" class="text-left px-5 py-3 bg-white border-2 border-sky-200 rounded-xl hover:border-red-500 transition-all font-medium text-slate-700">
+                                        <span class="inline-block w-8 h-8 rounded-full bg-sky-100 text-center leading-8 mr-3 text-sm font-bold text-slate-600">${String.fromCharCode(65+i)}</span>${opt}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        ${q.svg ? `<div class="flex items-center justify-center bg-slate-900 p-4 rounded-xl border border-slate-700 min-w-[220px]">${q.svg}</div>` : ''}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.onload = () => {
+            initQuiz();
+        };
+    </script>
+</body>
+</html>

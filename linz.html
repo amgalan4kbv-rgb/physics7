@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цуглуулагч линз - 9-р анги</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- MathJax сан: LaTeX тэмдэглэгээг математик томьёо болгон хөрвүүлэгч -->
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #eef6ff; /* Цайвар цэнхэр фон */
+        }
+        .tab-active { background-color: #8b5cf6; color: white; }
+        .tab-inactive { background-color: #dbeafe; color: #1e3a8a; }
+        .law-card {
+            border-left: 4px solid #8b5cf6;
+            background-color: #1e293b;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Математик бутархайн CSS хэв маяг */
+        .math-flex {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+            text-align: center;
+            padding: 0 4px;
+        }
+        .fraction .numerator {
+            border-bottom: 2px solid #1e293b;
+            padding-bottom: 2px;
+            line-height: 1;
+        }
+        .fraction .denominator {
+            padding-top: 2px;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen pb-10">
+
+    <header class="bg-white border-b border-blue-200 p-6 shadow-sm text-center">
+        <h1 class="text-3xl font-bold text-violet-700">Физикийн хичээл: Цуглуулагч линз</h1>
+        <p class="mt-2 text-slate-600 font-light">9-р анги | Цуглуулагч линзэнд дүрс байгуулах ба линзийн өсгөлт</p>
+        <p class="mt-3 text-violet-600 font-medium text-sm">Бэлтгэсэн: Цаст-Алтай сургуулийн физикийн багш М.Амгалан</p>
+    </header>
+
+    <main class="max-w-4xl mx-auto mt-8 px-4">
+        
+        <!-- Цэсийн товчлуурууд -->
+        <div class="flex flex-wrap justify-center gap-2 mb-6">
+            <button onclick="showTab('theory')" id="btn-theory" class="tab-active px-5 py-2 rounded-t-lg font-bold transition-all">1. Онол ба Дүрэм</button>
+            <button onclick="showTab('experiment')" id="btn-experiment" class="tab-inactive px-5 py-2 rounded-t-lg font-bold transition-all">2. Интерактив туршилт</button>
+            <button onclick="showTab('problems')" id="btn-problems" class="tab-inactive px-5 py-2 rounded-t-lg font-bold transition-all">3. Бодлого (10)</button>
+            <button onclick="showTab('quiz')" id="btn-quiz" class="tab-inactive px-5 py-2 rounded-t-lg font-bold transition-all">4. Сорил (10)</button>
+        </div>
+
+        <div class="bg-white p-6 sm:p-8 rounded-b-lg shadow-xl border-t-4 border-violet-500 min-h-[500px] text-slate-800" id="mainContentCard">
+            
+            <!-- 1. ОНОЛ ХЭСЭГ -->
+            <div id="theory" class="block space-y-8">
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-violet-800 border-b border-slate-200 pb-2 mb-4">Цуглуулагч линз гэж юу вэ?</h2>
+                    <p class="text-lg leading-relaxed text-gray-700">
+                        Дунд хэсгээрээ зузаан, захаараа нимгэн линзийг <strong>цуглуулагч линз</strong> гэнэ. Цуглуулагч линз дээр гол оптик тэнхлэгтэй параллелиар туссан гэрлийн цацрагууд линзээр хугарсны дараа линзийн ар талын нэг цэгт огтлолцон цуглардаг. Уг цэгийг <strong>линзийн бодит фокус (F)</strong> гэнэ.
+                    </p>
+
+                    <div class="flex flex-col md:flex-row items-center gap-8 bg-slate-50 p-6 rounded-xl border border-slate-200 my-4">
+                        <div class="w-full md:w-3/5 flex justify-center bg-slate-900 p-4 rounded-lg shadow-sm border border-gray-700">
+                            <svg viewBox="0 0 580 240" width="100%" height="220" class="max-w-full">
+                                <line x1="20" y1="120" x2="520" y2="120" stroke="#64748b" stroke-width="2" />
+                                <text x="525" y="124" fill="#94a3b8" font-size="11" font-weight="bold">Гол оптик тэнхлэг</text>
+
+                                <!-- Цуглуулагч линзийн тэмдэглэгээ (сумтай) -->
+                                <line x1="270" y1="20" x2="270" y2="220" stroke="#8b5cf6" stroke-width="4" stroke-linecap="round" />
+                                <path d="M 260 30 L 270 15 L 280 30" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round" fill="none" />
+                                <path d="M 260 210 L 270 225 L 280 210" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round" fill="none" />
+                                <text x="270" y="12" fill="#8b5cf6" font-size="11" font-weight="bold" text-anchor="middle">Цуглуулагч линз</text>
+
+                                <circle cx="270" cy="120" r="5" fill="white" stroke="#8b5cf6" stroke-width="2" />
+                                <text x="270" y="142" fill="white" font-size="12" font-weight="bold" text-anchor="middle">O</text>
+
+                                <circle cx="170" cy="120" r="4" fill="#c4b5fd" />
+                                <text x="170" y="140" fill="#c4b5fd" font-size="12" font-weight="bold" text-anchor="middle">F1</text>
+                                <circle cx="70" cy="120" r="4" fill="#c4b5fd" />
+                                <text x="70" y="140" fill="#c4b5fd" font-size="12" font-weight="bold" text-anchor="middle">2F1</text>
+
+                                <circle cx="370" cy="120" r="4" fill="#c4b5fd" />
+                                <text x="370" y="140" fill="#c4b5fd" font-size="12" font-weight="bold" text-anchor="middle">F2</text>
+                                <circle cx="470" cy="120" r="4" fill="#c4b5fd" />
+                                <text x="470" y="140" fill="#c4b5fd" font-size="12" font-weight="bold" text-anchor="middle">2F2</text>
+
+                                <!-- Дээд параллель цацраг цуглах -->
+                                <line x1="50" y1="60" x2="270" y2="60" stroke="#ef4444" stroke-width="2" />
+                                <polygon points="-5,-4 5,0 -5,4" fill="#ef4444" transform="translate(160,60)" />
+                                <line x1="270" y1="60" x2="470" y2="180" stroke="#ef4444" stroke-width="2" />
+                                <polygon points="-5,-4 5,0 -5,4" fill="#ef4444" transform="translate(320,90) rotate(30.96)" />
+
+                                <!-- Доод параллель цацраг цуглах -->
+                                <line x1="50" y1="180" x2="270" y2="180" stroke="#ef4444" stroke-width="2" />
+                                <polygon points="-5,-4 5,0 -5,4" fill="#ef4444" transform="translate(160,180)" />
+                                <line x1="270" y1="180" x2="470" y2="60" stroke="#ef4444" stroke-width="2" />
+                                <polygon points="-5,-4 5,0 -5,4" fill="#ef4444" transform="translate(320,150) rotate(-30.96)" />
+
+                                <text x="90" y="45" fill="#f43f5e" font-size="11" font-weight="bold">Параллель цацраг</text>
+                                <text x="370" y="95" fill="#38bdf8" font-size="11" font-weight="bold">Бодит фокус (F2)</text>
+                            </svg>
+                        </div>
+                        <div class="w-full md:w-2/5 space-y-2 text-sm text-gray-700">
+                            <p class="font-bold text-violet-800">Линзийн гэрэл цуглуулах зарчим:</p>
+                            <p class="text-xs">Параллелиар туссан цацрагууд линзээр нэвтрэхдээ дотогш хугарч, ар талын бодит фокус ($F_2$) цэг дээр нэгдэн огтлолцдог. Иймээс цуглуулагч линзийг эерэг фокусын зайтай ($F > 0$) гэж үздэг.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h3 class="font-bold text-violet-800 mb-2">Линзийн гол элементүүд:</h3>
+                            <ul class="list-disc pl-5 text-sm text-gray-600 space-y-2">
+                                <li><strong>Оптик төв (O):</strong> Линзийн геометрийн төв цэг. Энэ цэгийг дайрсан цацраг хугарахгүй шууд нэвтэрнэ.</li>
+                                <li><strong>Бодит Фокус цэг (F):</strong> Хугарсан цацрагууд цуглан огтлолцох цэг ($F > 0$).</li>
+                                <li><strong>Давхар фокус (2F):</strong> Фокусын зайнаас яг 2 дахин хол зайд орших цэг.</li>
+                                <li><strong>Гол оптик тэнхлэг:</strong> Линзийн оптик төв ба фокусуудыг дайрсан шулуун.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h3 class="font-bold text-purple-700 mb-2">Дүрс байгуулахад ашиглах гол 3 цацраг:</h3>
+                            <p class="text-xs text-gray-500 mb-2 leading-relaxed">Цуглуулагч линзэнд дүрс байгуулахад дараах 3 цацрагийн аль нэг хоёрыг ашиглана:</p>
+                            <ul class="list-decimal pl-5 text-sm text-gray-600 space-y-2">
+                                <li><strong>Параллель цацраг:</strong> Тэнхлэгтэй параллель туссан цацраг линзээр хугараад ар талын фокус ($F_2$)-ийг дайрна.</li>
+                                <li><strong>Оптик төвийг дайрах цацраг:</strong> Оптик төв ($O$) цэгийг дайрсан цацраг чиглэлээ өөрчлөхгүй шууд нэвтэрнэ.</li>
+                                <li><strong>Фокусыг дайрах цацраг:</strong> Урд талын фокус ($F_1$)-ийг дайран туссан цацраг хугарсны дараа тэнхлэгтэй параллель гарна.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- НИМГЭН ЛИНЗИЙН ТОМЬЁО -->
+                <section class="space-y-4 bg-violet-50/60 p-6 rounded-xl border border-violet-200">
+                    <h2 class="text-2xl font-bold text-violet-900 border-b border-violet-200 pb-2">Нимгэн линзийн томьёо ба Өсгөлт</h2>
+                    <p class="text-gray-700 leading-relaxed text-sm">
+                        Биетийн зай (<i class="font-bold text-slate-900">a</i>), дүрс хүртэлх зай (<i class="font-bold text-slate-900">b</i>) болон фокусын зай (<i class="font-bold text-slate-900">F</i>)-ны хоорондын хамаарлыг <strong>Нимгэн линзийн томьёо</strong>-гоор илэрхийлдэг.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-4">
+                        <div class="bg-white p-5 rounded-lg border border-violet-200 shadow-sm text-center">
+                            <h3 class="font-bold text-violet-800 mb-3">Нимгэн линзийн томьёо:</h3>
+                            
+                            <div class="math-flex my-4 text-slate-800">
+                                <div class="fraction">
+                                    <span class="numerator">1</span>
+                                    <span class="denominator">F</span>
+                                </div>
+                                <span>=</span>
+                                <div class="fraction">
+                                    <span class="numerator">1</span>
+                                    <span class="denominator">a</span>
+                                </div>
+                                <span class="text-emerald-600">±</span>
+                                <div class="fraction">
+                                    <span class="numerator">1</span>
+                                    <span class="denominator">b</span>
+                                </div>
+                            </div>
+
+                            <p class="text-xs text-gray-500 italic mt-2">
+                                (Бодит дүрс үүсэхэд <i class="font-semibold text-emerald-700">+b</i>, хуурмаг дүрс үүсэхэд <i class="font-semibold text-rose-600">−b</i> авна)
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-lg border border-violet-200 shadow-sm text-center">
+                            <h3 class="font-bold text-violet-800 mb-3">Шугаман өсгөлт (<i class="font-bold">k</i>):</h3>
+                            
+                            <div class="math-flex my-4 text-slate-800">
+                                <span>k =</span>
+                                <div class="fraction">
+                                    <span class="numerator">h</span>
+                                    <span class="denominator">H</span>
+                                </div>
+                                <span>= |</span>
+                                <div class="fraction">
+                                    <span class="numerator">b</span>
+                                    <span class="denominator">a</span>
+                                </div>
+                                <span>|</span>
+                            </div>
+
+                            <p class="text-xs text-gray-500 italic mt-2">
+                                Дүрс биетээс хэд дахин том эсвэл жижиг үүссэнийг харуулна.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg border border-violet-100 text-xs text-slate-700 space-y-1">
+                        <p class="font-bold text-slate-800">Тэмдэглэгээ ба нэгж:</p>
+                        <p>• <strong>a:</strong> Линзээс биет хүртэлх зай (м эсвэл см)</p>
+                        <p>• <strong>b:</strong> Линзээс дүрс хүртэлх зай (м эсвэл см)</p>
+                        <p>• <strong>F:</strong> Линзийн фокусын зай (м эсвэл см) [$F > 0$]</p>
+                        <p>• <strong>H, h:</strong> Биетийн ба дүрсийн өндөр (м эсвэл см)</p>
+                        <p>• <strong>D:</strong> Линзийн оптикийн хүч, $D = +\frac{1}{F}$ (диоптри, дптр)</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 2. ИНТЕРАКТИВ ТУРШИЛТ -->
+            <div id="experiment" class="hidden space-y-6">
+                <div class="bg-slate-900 p-4 sm:p-6 rounded-xl border border-slate-800 shadow-sm">
+                    <div class="flex flex-col lg:flex-row items-center justify-between mb-6 gap-6">
+                        <div class="flex flex-col gap-2 w-full lg:w-auto text-sm">
+                            <div class="font-bold text-slate-300">Удирдлага ба хэмжилт:</div>
+                            <div class="text-xs text-slate-400">Улаан сумыг (биетийг) чирж эсвэл слайдероор хөдөлгөнө үү.</div>
+                        </div>
+
+                        <div class="flex items-center gap-4 w-full lg:w-1/2">
+                            <label class="font-bold text-slate-300 text-sm whitespace-nowrap">Биетийн байрлал (a):</label>
+                            <input type="range" id="expSlider" min="30" max="350" value="250" class="flex-grow">
+                            <div id="distDisplay" class="bg-violet-600 text-white px-4 py-2 rounded-lg font-bold text-xl min-w-[80px] text-center shadow-md">250px</div>
+                        </div>
+                    </div>
+
+                    <div class="relative bg-slate-950 rounded-2xl overflow-hidden border-8 border-slate-800 shadow-2xl flex justify-center items-center">
+                        <canvas id="lensCanvas" width="760" height="420" class="w-full h-auto cursor-pointer"></canvas>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 text-sm">
+                        <div class="bg-slate-800 p-3 rounded-lg border border-slate-700 text-center text-slate-100">
+                            <div class="text-xs text-slate-400">Фокусын зай (F)</div>
+                            <div class="text-lg font-bold text-violet-400">+100 px</div>
+                        </div>
+                        <div class="bg-slate-800 p-3 rounded-lg border border-slate-700 text-center text-slate-100">
+                            <div class="text-xs text-slate-400">Биет хүртэлх зай (a)</div>
+                            <div id="metricD" class="text-lg font-bold text-red-400">250 px</div>
+                        </div>
+                        <div class="bg-slate-800 p-3 rounded-lg border border-slate-700 text-center text-slate-100">
+                            <div class="text-xs text-slate-400">Дүрс хүртэлх зай (b)</div>
+                            <div id="metricDPrime" class="text-lg font-bold text-emerald-400">167 px</div>
+                        </div>
+                        <div class="bg-slate-800 p-3 rounded-lg border border-slate-700 text-center text-slate-100">
+                            <div class="text-xs text-slate-400">Өсгөлт (k)</div>
+                            <div id="metricK" class="text-lg font-bold text-violet-400">0.67 x</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-4 bg-slate-800 rounded-xl text-center text-sm border border-slate-700 text-slate-100">
+                        <div class="text-slate-400 text-xs">Үүссэн дүрсний төлөв байдал ба хэрэглээ:</div>
+                        <span id="experimentStatus" class="font-bold text-lg text-violet-400"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. БОДЛОГО ХЭСЭГ -->
+            <div id="problems" class="hidden space-y-6">
+                <div class="border-b border-gray-200 pb-3 mb-4">
+                    <h2 class="text-2xl font-bold text-violet-800">Цуглуулагч линзийн бодлогууд</h2>
+                    <p class="text-sm text-gray-600 mt-1">Дараах 10 бодлогыг бие даан бодоод "Бодолт харах" товчлуур дээр дарж шалгаарай.</p>
+                </div>
+
+                <div class="space-y-6" id="problems-container">
+                    <!-- Бодлого 1 -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <span class="inline-block bg-violet-600 text-white font-bold text-xs px-2.5 py-1 rounded mb-2">Бодлого 1</span>
+                                <p class="text-gray-800 font-medium">
+                                    Цуглуулагч линзийн фокусын зай $F = 10\text{ см}$. Биеийг линзээс $a = 30\text{ см}$ зайд байрлуулсан бол дүрс линзээс ямар зайд ($b$) үүсэх вэ?
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSolution(1)" class="mt-4 text-xs font-bold bg-violet-100 text-violet-800 hover:bg-violet-200 px-4 py-2 rounded-lg transition-all flex items-center gap-1">
+                            <span>🔍 Бодолт & Хариу харах</span>
+                        </button>
+                        <div id="solution-1" class="hidden mt-4 p-4 bg-white border border-violet-200 rounded-lg text-sm text-gray-700 space-y-2">
+                            <p class="font-bold text-violet-800">Бодолт:</p>
+                            <p>Өгөгдсөн нь: $F = 10\text{ см}$, $a = 30\text{ см}$. ($a > 2F$ тул бодит дүрс үүснэ)</p>
+                            <p>Нимгэн линзийн томьёо: $\frac{1}{F} = \frac{1}{a} + \frac{1}{b}$</p>
+                            <p>Эндээс $\frac{1}{b} = \frac{1}{F} - \frac{1}{a} = \frac{1}{10} - \frac{1}{30} = \frac{3 - 1}{30} = \frac{2}{30} = \frac{1}{15}$</p>
+                            <p class="font-bold text-emerald-700">Хариу: $b = 15\text{ см}$ (Линзийн ар талд $15\text{ см}$ зайд бодит, урвуу, жижигрүүлсэн дүрс үүснэ).</p>
+                        </div>
+                    </div>
+
+                    <!-- Бодлого 2 -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <span class="inline-block bg-violet-600 text-white font-bold text-xs px-2.5 py-1 rounded mb-2">Бодлого 2</span>
+                                <p class="text-gray-800 font-medium">
+                                    Биетийг цуглуулагч линзээс $a = 20\text{ см}$ зайд тавихад линзийн ард $b = 20\text{ см}$ зайд бодит дүрс үүсев. Линзийн фокусын зай $F$-ийг олно уу.
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSolution(2)" class="mt-4 text-xs font-bold bg-violet-100 text-violet-800 hover:bg-violet-200 px-4 py-2 rounded-lg transition-all flex items-center gap-1">
+                            <span>🔍 Бодолт & Хариу харах</span>
+                        </button>
+                        <div id="solution-2" class="hidden mt-4 p-4 bg-white border border-violet-200 rounded-lg text-sm text-gray-700 space-y-2">
+                            <p class="font-bold text-violet-800">Бодолт:</p>
+                            <p>Өгөгдсөн нь: $a = 20\text{ см}$, $b = 20\text{ см}$.</p>
+                            <p>Томьёо: $\frac{1}{F} = \frac{1}{a} + \frac{1}{b} = \frac{1}{20} + \frac{1}{20} = \frac{2}{20} = \frac{1}{10}$</p>
+                            <p class="font-bold text-emerald-700">Хариу: $F = 10\text{ см}$ ($a = 2F = 20\text{ см}$ учир биет давхар фокус дээр байсан ба адил хэмжээтэй дүрс үүссэн).</p>
+                        </div>
+                    </div>
+
+                    <!-- Бодлого 3 -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <span class="inline-block bg-violet-600 text-white font-bold text-xs px-2.5 py-1 rounded mb-2">Бодлого 3</span>
+                                <p class="text-gray-800 font-medium">
+                                    Кино проекторын линзийн фокус $F = 12\text{ см}$. Кино хальсыг линзээс $a = 18\text{ см}$ зайд байрлуулсан бол дэлгэц дээрх дүрс ($b$) ямар зайд үүсэх вэ? Шугаман өсгөлт $k$-г ол.
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSolution(3)" class="mt-4 text-xs font-bold bg-violet-100 text-violet-800 hover:bg-violet-200 px-4 py-2 rounded-lg transition-all flex items-center gap-1">
+                            <span>🔍 Бодолт & Хариу харах</span>
+                        </button>
+                        <div id="solution-3" class="hidden mt-4 p-4 bg-white border border-violet-200 rounded-lg text-sm text-gray-700 space-y-2">
+                            <p class="font-bold text-violet-800">Бодолт:</p>
+                            <p>1) $\frac{1}{b} = \frac{1}{F} - \frac{1}{a} = \frac{1}{12} - \frac{1}{18} = \frac{3 - 2}{36} = \frac{1}{36} \implies b = 36\text{ см}$.</p>
+                            <p>2) Өсгөлт $k = \frac{b}{a} = \frac{36}{18} = 2$.</p>
+                            <p class="font-bold text-emerald-700">Хариу: $b = 36\text{ см}$, $k = 2$ дахин томруулна.</p>
+                        </div>
+                    </div>
+
+                    <!-- Бодлого 4 -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <span class="inline-block bg-violet-600 text-white font-bold text-xs px-2.5 py-1 rounded mb-2">Бодлого 4</span>
+                                <p class="text-gray-800 font-medium">
+                                    Марк цуглуулагч $F = 15\text{ см}$ фокусын зайтай луп (томруудаг шил)-ээр маркийг $a = 10\text{ см}$ зайнаас харав. Маркны дүрс ямар зайд үүсэх вэ?
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSolution(4)" class="mt-4 text-xs font-bold bg-violet-100 text-violet-800 hover:bg-violet-200 px-4 py-2 rounded-lg transition-all flex items-center gap-1">
+                            <span>🔍 Бодолт & Хариу харах</span>
+                        </button>
+                        <div id="solution-4" class="hidden mt-4 p-4 bg-white border border-violet-200 rounded-lg text-sm text-gray-700 space-y-2">
+                            <p class="font-bold text-violet-800">Бодолт:</p>
+                            <p>Өгөгдсөн нь: $F = 15\text{ см}$, $a = 10\text{ см}$. Энд $a < F$ тул хуурмаг дүрс үүснэ!</p>
+                            <p>Томьёо: $\frac{1}{F} = \frac{1}{a} - \frac{1}{b} \implies \frac{1}{b} = \frac{1}{a} - \frac{1}{F} = \frac{1}{10} - \frac{1}{15} = \frac{3 - 2}{30} = \frac{1}{30}$</p>
+                            <p class="font-bold text-emerald-700">Хариу: $b = -30\text{ см}$ (Линзийн урд талд $30\text{ см}$ зайд хуурмаг, эгц, 3 дахин томруулсан дүрс харагдана).</p>
+                        </div>
+                    </div>
+
+                    <!-- Бодлого 5 -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <span class="inline-block bg-violet-600 text-white font-bold text-xs px-2.5 py-1 rounded mb-2">Бодлого 5</span>
+                                <p class="text-gray-800 font-medium">
+                                    Оптикийн хүч нь $D = +5\text{ дптр}$ байх цуглуулагч линзээс $a = 30\text{ см}$ зайд биетийг байрлуулав. Дүрс хүртэлх зай $b$-г олно уу.
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSolution(5)" class="mt-4 text-xs font-bold bg-violet-100 text-violet-800 hover:bg-violet-200 px-4 py-2 rounded-lg transition-all flex items-center gap-1">
+                            <span>🔍 Бодолт & Хариу харах</span>
+                        </button>
+                        <div id="solution-5" class="hidden mt-4 p-4 bg-white border border-violet-200 rounded-lg text-sm text-gray-700 space-y-2">
+                            <p class="font-bold text-violet-800">Бодолт:</p>
+                            <p>1) Фокусын зай $F = \frac{1}{D} = \frac{1}{5} = 0.2\text{ м} = 20\text{ см}$.</p>
+                            <p>2) $\frac{1}{b} = \frac{1}{F} - \frac{1}{a} = \frac{1}{20} - \frac{1}{30} = \frac{3 - 2}{60} = \frac{1}{60} \implies b = 60\text{ см}$.</p>
+                            <p class="font-bold text-emerald-700">Хариу: $b = 60\text{ см}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Бодлого 6 -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <span class="inline-block bg-violet-600 text-white font-bold text-xs px-2.5 py-1 rounded mb-2">Бодлого 6</span>
+                                <p class="text-gray-800 font-medium">
+                                    $H = 6\text{ см}$ өндөртэй зүйл $F = 10\text{ см}$ фокустай линзээс $a = 15\text{ см}$ зайд байрлана. Дүрсийн өндөр $h$-ийг олно уу.
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSolution(6)" class="mt-4 text-xs font-bold bg-violet-100 text-violet-800 hover:bg-violet-200 px-4 py-2 rounded-lg transition-all flex items-center gap-1">
+                            <span>🔍 Бодолт & Хариу харах</span>
+                        </button>
+                        <div id="solution-6" class="hidden mt-4 p-4 bg-white border border-violet-200 rounded-lg text-sm text-gray-700 space-y-2">
+                            <p class="font-bold text-violet-800">Бодолт:</p>
+                            <p>1) $\frac{1}{b} = \frac{1}{10} - \frac{1}{15} = \frac{1}{30} \implies b = 30\text{ см}$.</p>
+                            <p>2) Өсгөлт $k = \frac{b}{a} = \frac{30}{15} = 2$.</p>
+                            <p>3) Дүрсийн өндөр $h = k \cdot H = 2 \times 6\text{ см} = 12\text{ см}$.</p>
+                            <p class="font-bold text-emerald-700">Хариу: $h = 12\text{ см}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Бодлого 7 -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <span class="inline-block bg-violet-600 text-white font-bold text-xs px-2.5 py-1 rounded mb-2">Бодлого 7</span>
+                                <p class="text-gray-800 font-medium">
+                                    Фотоаппаратаар $a = 40\text{ см}$ зайд байгаа зүйлийн зургийг авахад линзээс $b = 10\text{ см}$ зайд хальсан дээр дүрс буув. Линзийн фокусын зай $F$-ийг ол.
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSolution(7)" class="mt-4 text-xs font-bold bg-violet-100 text-violet-800 hover:bg-violet-200 px-4 py-2 rounded-lg transition-all flex items-center gap-1">
+                            <span>🔍 Бодолт & Хариу харах</span>
+                        </button>
+                        <div id="solution-7" class="hidden mt-4 p-4 bg-white border border-violet-200 rounded-lg text-sm text-gray-700 space-y-2">
+                            <p class="font-bold text-violet-800">Бодолт:</p>
+                            <p>$\frac{1}{F} = \frac{1}{a} + \frac{1}{b} = \frac{1}{40} + \frac{1}{10} = \frac{1 + 4}{40} = \frac{5}{40} = \frac{1}{8}$</p>
+                            <p class="font-bold text-emerald-700">Хариу: $F = 8\text{ см}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Бодлого 8 -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <span class="inline-block bg-violet-600 text-white font-bold text-xs px-2.5 py-1 rounded mb-2">Бодлого 8</span>
+                                <p class="text-gray-800 font-medium">
+                                    $F = 20\text{ см}$ фокусын зайтай цуглуулагч линзийн ард $b = 60\text{ см}$ зайд бодит дүрс үүссэн бол биет линзээс ямар зайд ($a$) байсан бэ?
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSolution(8)" class="mt-4 text-xs font-bold bg-violet-100 text-violet-800 hover:bg-violet-200 px-4 py-2 rounded-lg transition-all flex items-center gap-1">
+                            <span>🔍 Бодолт & Хариу харах</span>
+                        </button>
+                        <div id="solution-8" class="hidden mt-4 p-4 bg-white border border-violet-200 rounded-lg text-sm text-gray-700 space-y-2">
+                            <p class="font-bold text-violet-800">Бодолт:</p>
+                            <p>$\frac{1}{a} = \frac{1}{F} - \frac{1}{b} = \frac{1}{20} - \frac{1}{60} = \frac{3 - 1}{60} = \frac{2}{60} = \frac{1}{30}$</p>
+                            <p class="font-bold text-emerald-700">Хариу: $a = 30\text{ см}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Бодлого 9 -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <span class="inline-block bg-violet-600 text-white font-bold text-xs px-2.5 py-1 rounded mb-2">Бодлого 9</span>
+                                <p class="text-gray-800 font-medium">
+                                    Биетийг цуглуулагч линзээс $a = 10\text{ см}$ зайд байрлуулахад 2 дахин томруулсан хуурмаг дүрс ($k = 2$) үүсэв. Линзийн фокус $F$-ийг олно уу.
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSolution(9)" class="mt-4 text-xs font-bold bg-violet-100 text-violet-800 hover:bg-violet-200 px-4 py-2 rounded-lg transition-all flex items-center gap-1">
+                            <span>🔍 Бодолт & Хариу харах</span>
+                        </button>
+                        <div id="solution-9" class="hidden mt-4 p-4 bg-white border border-violet-200 rounded-lg text-sm text-gray-700 space-y-2">
+                            <p class="font-bold text-violet-800">Бодолт:</p>
+                            <p>1) $k = \frac{b}{a} \implies b = k \cdot a = 2 \times 10\text{ см} = 20\text{ см}$.</p>
+                            <p>2) Хуурмаг дүрс тул: $\frac{1}{F} = \frac{1}{a} - \frac{1}{b} = \frac{1}{10} - \frac{1}{20} = \frac{1}{20} \implies F = 20\text{ см}$.</p>
+                            <p class="font-bold text-emerald-700">Хариу: $F = 20\text{ см}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Бодлого 10 -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <span class="inline-block bg-violet-600 text-white font-bold text-xs px-2.5 py-1 rounded mb-2">Бодлого 10</span>
+                                <p class="text-gray-800 font-medium">
+                                    $H = 4\text{ см}$ өндөртэй биеийг линзийн өмнө $a = 50\text{ см}$ зайд тавихад $h = 1\text{ см}$ өндөртэй бодит дүрс үүссэн бол линзийн оптикийн хүч $D$-г олно уу.
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSolution(10)" class="mt-4 text-xs font-bold bg-violet-100 text-violet-800 hover:bg-violet-200 px-4 py-2 rounded-lg transition-all flex items-center gap-1">
+                            <span>🔍 Бодолт & Хариу харах</span>
+                        </button>
+                        <div id="solution-10" class="hidden mt-4 p-4 bg-white border border-violet-200 rounded-lg text-sm text-gray-700 space-y-2">
+                            <p class="font-bold text-violet-800">Бодолт:</p>
+                            <p>1) Өсгөлт $k = \frac{h}{H} = \frac{1}{4} = 0.25$.</p>
+                            <p>2) $b = k \cdot a = 0.25 \times 50\text{ см} = 12.5\text{ см}$.</p>
+                            <p>3) $\frac{1}{F} = \frac{1}{50} + \frac{1}{12.5} = \frac{1 + 4}{50} = \frac{5}{50} = \frac{1}{10} \implies F = 10\text{ см} = 0.1\text{ м}$.</p>
+                            <p>4) Оптикийн хүч $D = +\frac{1}{F} = \frac{1}{0.1\text{ м}} = +10\text{ дптр}$.</p>
+                            <p class="font-bold text-emerald-700">Хариу: $D = +10\text{ дптр}$.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. СОРИЛ ХЭСЭГ -->
+            <div id="quiz" class="hidden space-y-6">
+                <div id="quiz-container" class="space-y-8"></div>
+                <div class="flex justify-center mt-8" id="quizSubmitContainer">
+                    <button onclick="calculateScore()" class="bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 px-10 rounded-full shadow-lg transition-transform active:scale-95">Дүнгээ үзэх</button>
+                </div>
+                <div id="quiz-result" class="hidden mt-10 p-10 rounded-3xl text-center shadow-2xl border-4"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function showTab(tabId) {
+            const card = document.getElementById('mainContentCard');
+            if (tabId === 'experiment') {
+                card.className = "bg-slate-900 p-6 sm:p-8 rounded-b-lg shadow-xl border-t-4 border-violet-500 min-h-[500px] text-slate-100";
+            } else {
+                card.className = "bg-white p-6 sm:p-8 rounded-b-lg shadow-xl border-t-4 border-violet-500 min-h-[500px] text-slate-800";
+            }
+            
+            ['theory', 'experiment', 'problems', 'quiz'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            ['btn-theory', 'btn-experiment', 'btn-problems', 'btn-quiz'].forEach(id => {
+                const btn = document.getElementById(id);
+                if(btn) btn.classList.replace('tab-active', 'tab-inactive');
+            });
+            
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById('btn-' + tabId).classList.replace('tab-inactive', 'tab-active');
+            
+            if (tabId === 'experiment') {
+                setTimeout(initSimulation, 50);
+            }
+            
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function toggleSolution(id) {
+            const sol = document.getElementById(`solution-${id}`);
+            if (sol.classList.contains('hidden')) {
+                sol.classList.remove('hidden');
+                if (window.MathJax) {
+                    MathJax.typesetPromise([sol]);
+                }
+            } else {
+                sol.classList.add('hidden');
+            }
+        }
+
+        // --- ИНТЕРАКТИВ СИМУЛЯЦИЙН СИСТЕМ (Цуглуулагч линз) ---
+        let canvas, ctx;
+        let objX = 130; 
+        let isDragging = false;
+        const lensX = 380; 
+        const f = 100; 
+        let animId = null;
+
+        function initSimulation() {
+            canvas = document.getElementById('lensCanvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+            
+            const slider = document.getElementById('expSlider');
+            objX = lensX - parseInt(slider.value);
+
+            slider.addEventListener('input', (e) => {
+                objX = lensX - parseInt(e.target.value);
+            });
+
+            canvas.addEventListener('mousedown', onStartDrag);
+            canvas.addEventListener('mousemove', onDrag);
+            canvas.addEventListener('mouseup', onEndDrag);
+            canvas.addEventListener('mouseleave', onEndDrag);
+
+            canvas.addEventListener('touchstart', (e) => {
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousedown', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);
+            }, { passive: true });
+
+            canvas.addEventListener('touchmove', (e) => {
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);
+            }, { passive: true });
+
+            canvas.addEventListener('touchend', () => {
+                const mouseEvent = new MouseEvent('mouseup', {});
+                canvas.dispatchEvent(mouseEvent);
+            }, { passive: true });
+
+            if (animId) {
+                cancelAnimationFrame(animId);
+            }
+            
+            function renderLoop() {
+                updateSim();
+                animId = requestAnimationFrame(renderLoop);
+            }
+            renderLoop();
+        }
+
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: (e.clientX - rect.left) * (canvas.width / rect.width),
+                y: (e.clientY - rect.top) * (canvas.height / rect.height)
+            };
+        }
+
+        function onStartDrag(e) {
+            const pos = getMousePos(e);
+            if (Math.abs(pos.x - objX) < 25 && pos.x < lensX) {
+                isDragging = true;
+            }
+        }
+
+        function onDrag(e) {
+            if (!isDragging) return;
+            const pos = getMousePos(e);
+            
+            if (pos.x < 30) objX = 30;
+            else if (pos.x > lensX - 15) objX = lensX - 15;
+            else objX = pos.x;
+
+            const dist = Math.round(lensX - objX);
+            document.getElementById('expSlider').value = dist;
+        }
+
+        function onEndDrag() {
+            isDragging = false;
+        }
+
+        function drawLens(context, x, y, height) {
+            context.save();
+            context.strokeStyle = '#8b5cf6';
+            context.lineWidth = 4;
+            context.shadowBlur = 10;
+            context.shadowColor = '#8b5cf6';
+            
+            // Цуглуулагч линзийн томруулсан дүрс
+            context.beginPath();
+            context.moveTo(x, y - height / 2);
+            context.quadraticCurveTo(x + 18, y, x, y + height / 2);
+            context.quadraticCurveTo(x - 18, y, x, y - height / 2);
+            context.closePath();
+            context.fillStyle = 'rgba(139, 92, 246, 0.15)';
+            context.fill();
+            context.stroke();
+
+            // Сүмбэн суман тэмдэглэгээ хоёр захад
+            context.beginPath();
+            context.moveTo(x - 10, y - height / 2 + 10);
+            context.lineTo(x, y - height / 2);
+            context.lineTo(x + 10, y - height / 2 + 10);
+            
+            context.moveTo(x - 10, y + height / 2 - 10);
+            context.lineTo(x, y + height / 2);
+            context.lineTo(x + 10, y + height / 2 - 10);
+            context.stroke();
+
+            context.restore();
+        }
+
+        function updateSim() {
+            if (!canvas) return;
+            const w = canvas.width, h = canvas.height;
+            const centerY = h / 2; 
+            const objH = 60; 
+
+            const a = lensX - objX; 
+            document.getElementById('distDisplay').innerText = Math.round(a) + "px";
+            document.getElementById('metricD').innerText = Math.round(a) + " px";
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Тор шугам
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.lineWidth = 1;
+            for (let i = 20; i < w; i += 20) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, h); ctx.stroke();
+            }
+            for (let i = 20; i < h; i += 20) {
+                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(w, i); ctx.stroke();
+            }
+
+            // Гол оптик тэнхлэг
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(20, centerY); ctx.lineTo(w - 20, centerY); ctx.stroke();
+
+            // Оптик төв
+            ctx.fillStyle = 'white';
+            ctx.beginPath(); ctx.arc(lensX, centerY, 5, 0, Math.PI*2); ctx.fill();
+            ctx.font = 'bold 12px sans-serif';
+            ctx.fillText("O", lensX - 15, centerY + 18);
+
+            const f1X = lensX - f; 
+            const f2X = lensX + f; 
+            const df1X = lensX - 2*f; 
+            const df2X = lensX + 2*f; 
+
+            // Фокус цэгүүд
+            ctx.fillStyle = '#c4b5fd';
+            ctx.beginPath(); ctx.arc(f1X, centerY, 4, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(f2X, centerY, 4, 0, Math.PI*2); ctx.fill();
+            ctx.fillText("F1", f1X - 8, centerY + 18);
+            ctx.fillText("F2", f2X - 8, centerY + 18);
+
+            ctx.beginPath(); ctx.arc(df1X, centerY, 4, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(df2X, centerY, 4, 0, Math.PI*2); ctx.fill();
+            ctx.fillText("2F1", df1X - 10, centerY + 18);
+            ctx.fillText("2F2", df2X - 10, centerY + 18);
+
+            drawLens(ctx, lensX, centerY, 300);
+
+            // Биет (Улаан сум)
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 4;
+            ctx.beginPath(); ctx.moveTo(objX, centerY); ctx.lineTo(objX, centerY - objH); ctx.stroke();
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.moveTo(objX, centerY - objH - 5);
+            ctx.lineTo(objX - 8, centerY - objH + 8);
+            ctx.lineTo(objX + 8, centerY - objH + 8);
+            ctx.closePath(); ctx.fill();
+            ctx.fillStyle = 'white';
+            ctx.fillText("Биет", objX - 15, centerY - objH - 12);
+
+            let statusText = "";
+
+            if (Math.abs(a - f) < 3) {
+                // a = F тохиолдол
+                document.getElementById('metricDPrime').innerText = "∞ (Хязгааргүй)";
+                document.getElementById('metricK').innerText = "-";
+                
+                // Цацраг 1: Параллель
+                ctx.strokeStyle = '#fb7185'; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(objX, centerY - objH); ctx.lineTo(lensX, centerY - objH); ctx.stroke();
+                ctx.strokeStyle = '#34d399';
+                ctx.beginPath(); ctx.moveTo(lensX, centerY - objH); ctx.lineTo(w, centerY - objH + (w - lensX)*(objH/f)); ctx.stroke();
+
+                // Цацраг 2: Оптик төв
+                ctx.strokeStyle = '#fb7185';
+                ctx.beginPath(); ctx.moveTo(objX, centerY - objH); ctx.lineTo(lensX, centerY); ctx.stroke();
+                ctx.strokeStyle = '#34d399';
+                ctx.beginPath(); ctx.moveTo(lensX, centerY); ctx.lineTo(w, centerY + (w - lensX)*(objH/a)); ctx.stroke();
+
+                statusText = "a = F: ДҮРС ҮҮСЭХГҮЙ. Хугарсан цацрагууд параллель гарна (Хэрэглээ: Прожектор, гар чийдэн).";
+            } 
+            else if (a > f) {
+                // Бодит дүрс үүсэх тохиолдол (a > F)
+                const b = (f * a) / (a - f);
+                const k = b / a;
+                const imgX = lensX + b;
+                const imgH = objH * k;
+
+                document.getElementById('metricDPrime').innerText = Math.round(b) + " px";
+                document.getElementById('metricK').innerText = k.toFixed(2) + " x";
+
+                // Дүрс (Ногоон сум - Урвуу)
+                ctx.save();
+                ctx.shadowBlur = 10; ctx.shadowColor = '#10b981';
+                ctx.strokeStyle = '#10b981'; ctx.lineWidth = 4;
+                ctx.beginPath(); ctx.moveTo(imgX, centerY); ctx.lineTo(imgX, centerY + imgH); ctx.stroke();
+                ctx.fillStyle = '#10b981';
+                ctx.beginPath();
+                ctx.moveTo(imgX, centerY + imgH + 5);
+                ctx.lineTo(imgX - 8, centerY + imgH - 8);
+                ctx.lineTo(imgX + 8, centerY + imgH - 8);
+                ctx.closePath(); ctx.fill();
+                ctx.fillStyle = 'white';
+                ctx.fillText("Бодит дүрс", imgX - 30, centerY + imgH + 20);
+                ctx.restore();
+
+                // Цацраг 1: Параллель тусаж, F2-оор гарах
+                ctx.strokeStyle = '#fb7185'; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(objX, centerY - objH); ctx.lineTo(lensX, centerY - objH); ctx.stroke();
+                ctx.strokeStyle = '#34d399';
+                ctx.beginPath(); ctx.moveTo(lensX, centerY - objH); ctx.lineTo(imgX, centerY + imgH); ctx.stroke();
+
+                // Цацраг 2: Оптик төвийг шууд дайрах
+                ctx.strokeStyle = '#fb7185';
+                ctx.beginPath(); ctx.moveTo(objX, centerY - objH); ctx.lineTo(lensX, centerY); ctx.stroke();
+                ctx.strokeStyle = '#34d399';
+                ctx.beginPath(); ctx.moveTo(lensX, centerY); ctx.lineTo(imgX, centerY + imgH); ctx.stroke();
+
+                if (a > 2*f) {
+                    statusText = `a > 2F: БОДИТ, УРВУУ, ЖИЖИГРҮҮЛСЭН дүрс F2 ба 2F2-ийн хооронд үүснэ. (Хэрэглээ: Зургийн аппарат, хүний нүд)`;
+                } else if (Math.abs(a - 2*f) < 4) {
+                    statusText = `a = 2F: БОДИТ, УРВУУ, АДИЛ ХЭМЖЭЭТЭЙ дүрс яг 2F2 дээр үүснэ. (Хэрэглээ: Ксерокс / Хувилах аппарат)`;
+                } else {
+                    statusText = `F < a < 2F: БОДИТ, УРВУУ, ТОМРУУЛСАН дүрс 2F2-оос цааш үүснэ. (Хэрэглээ: Проектор, Микроскоп, Кино аппарат)`;
+                }
+            } 
+            else {
+                // Хуурмаг дүрс үүсэх тохиолдол (a < F)
+                const b = (f * a) / (f - a); // Зайн хэмжээ
+                const k = b / a;
+                const imgX = lensX - b; // Урд талд үүснэ
+                const imgH = objH * k;
+
+                document.getElementById('metricDPrime').innerText = "-" + Math.round(b) + " px";
+                document.getElementById('metricK').innerText = k.toFixed(2) + " x";
+
+                // Дүрс (Цэнхэр сум - Хуурмаг, Эгц)
+                ctx.save();
+                ctx.shadowBlur = 10; ctx.shadowColor = '#3b82f6';
+                ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 4;
+                ctx.setLineDash([4, 4]);
+                ctx.beginPath(); ctx.moveTo(imgX, centerY); ctx.lineTo(imgX, centerY - imgH); ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#3b82f6';
+                ctx.beginPath();
+                ctx.moveTo(imgX, centerY - imgH - 5);
+                ctx.lineTo(imgX - 8, centerY - imgH + 8);
+                ctx.lineTo(imgX + 8, centerY - imgH + 8);
+                ctx.closePath(); ctx.fill();
+                ctx.fillStyle = 'white';
+                ctx.fillText("Хуурмаг дүрс", imgX - 35, centerY - imgH - 12);
+                ctx.restore();
+
+                // Цацраг 1 ба түүний буцах үргэлжлэл
+                ctx.strokeStyle = '#fb7185'; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(objX, centerY - objH); ctx.lineTo(lensX, centerY - objH); ctx.stroke();
+                ctx.strokeStyle = '#34d399';
+                ctx.beginPath(); ctx.moveTo(lensX, centerY - objH); ctx.lineTo(w, centerY - objH + (w - lensX)*((centerY - objH - (centerY - objH))/f || 0.6)); ctx.stroke();
+                
+                // Буцах цэнхэр тасархай шугам
+                ctx.strokeStyle = '#60a5fa'; ctx.setLineDash([3, 3]);
+                ctx.beginPath(); ctx.moveTo(lensX, centerY - objH); ctx.lineTo(imgX, centerY - imgH); ctx.stroke();
+
+                // Цацраг 2 ба буцах үргэлжлэл
+                ctx.strokeStyle = '#fb7185';
+                ctx.beginPath(); ctx.moveTo(objX, centerY - objH); ctx.lineTo(lensX, centerY); ctx.stroke();
+                ctx.strokeStyle = '#34d399';
+                ctx.beginPath(); ctx.moveTo(lensX, centerY); ctx.lineTo(w, centerY + (w - lensX)*(objH/a)); ctx.stroke();
+                
+                ctx.strokeStyle = '#60a5fa'; ctx.setLineDash([3, 3]);
+                ctx.beginPath(); ctx.moveTo(lensX, centerY); ctx.lineTo(imgX, centerY - imgH); ctx.stroke();
+                ctx.setLineDash([]);
+
+                statusText = `a < F: ХУУРМАГ, ЭГЦ (ШУУД), ТОМРУУЛСАН дүрс биеийн ард үүснэ. (Хэрэглээ: Луп / Томруулагч шил)`;
+            }
+
+            document.getElementById('experimentStatus').innerText = statusText;
+        }
+
+        // --- СОРИЛЫН АСУУЛТУУД (Цуглуулагч линз) ---
+        const quizQuestions = [
+            { 
+                q: "1. Цуглуулагч линз дээр гол оптик тэнхлэгтэй параллелиар туссан цацрагууд линзээр хугарсны дараа яаж тарах вэ?", 
+                options: [
+                    "Линзийн ар талын нэг цэгт (Бодит фокуст) цуглан огтлолцоно", 
+                    "Тал тал тийш сарнин тарна", 
+                    "Чиглэлээ огт өөрчлөхгүй шууд нэвтэрнэ", 
+                    "Линзний гадаргуугаас бүрэн ойж буцна"
+                ], 
+                correct: 0 
+            },
+            { 
+                q: "2. Зургийн аппарат (фотоаппарат)-д биетийн дүрсийг хальсан дээр буулгахдаа биетийг линзээс ямар зайд байрлуулдаг вэ?", 
+                options: [
+                    "Фокусын зайнаас дотор ($a < F$)", 
+                    "Давхар фокусын зайнаас цааш хол зайд ($a > 2F$)", 
+                    "Яг фокус дээр ($a = F$)", 
+                    "Фокус ба давхар фокусын хооронд ($F < a < 2F$)"
+                ], 
+                correct: 1 
+            },
+            { 
+                q: "3. Биетийг цуглуулагч линзийн яг давхар фокус ($a = 2F$) дээр байрлуулбал үүсэх дүрсний шинж ямар байх вэ?", 
+                options: [
+                    "Бодит, урвуу, биеттэй адил хэмжээтэй ($b = 2F$)", 
+                    "Хуурмаг, эгц, томруулсан дүрс", 
+                    "Бодит, урвуу, маш жижиг дүрс", 
+                    "Дүрс үүсэхгүй"
+                ], 
+                correct: 0 
+            },
+            { 
+                q: "4. Луп буюу томруудаг шилээр юм харахад биетийг линзийн ямар зайд барих ёстой вэ?", 
+                options: [
+                    "Давхар фокусоос цааш ($a > 2F$)", 
+                    "Фокус ба давхар фокусын дунд ($F < a < 2F$)", 
+                    "Фокусын зайн дотор ($a < F$)", 
+                    "Яг давхар фокус дээр ($a = 2F$)"
+                ], 
+                correct: 2 
+            },
+            { 
+                q: "5. Проектор болон кино аппаратад жижиг хальсны дүрсийг дэлгэц дээр томруулж буулгахын тулд хальсыг ямар зайд байрлуулдаг вэ?", 
+                options: [
+                    "Фокус ба давхар фокусын хооронд ($F < a < 2F$)", 
+                    "Фокусын зайнаас бага зайд ($a < F$)", 
+                    "Давхар фокусоос цааш хол зайд ($a > 2F$)", 
+                    "Линзний оптик төв дээр"
+                ], 
+                correct: 0 
+            },
+            { 
+                q: "6. Биетийг цуглуулагч линзийн яг фокус цэг ($a = F$) дээр байрлуулбал дүрс яагаад үүсдэггүй вэ?", 
+                options: [
+                    "Гэрэл линзээр огт нэвтэрдэггүй тул", 
+                    "Линзээр хугарсны дараах цацрагууд бие биетэйгээ параллель болж огтлолцдоггүй тул", 
+                    "Цацрагууд буцаж ойдог тул", 
+                    "Дүрс маш жижиг болж замхардаг тул"
+                ], 
+                correct: 1 
+            },
+            { 
+                q: "7. Цуглуулагч линзийн фокусын зай $F = 10\text{ см}$. Биетийг $a = 15\text{ см}$ зайд тавивал дүрс хүртэлх зай $b$ хэд байх вэ?", 
+                options: [
+                    "30 см", 
+                    "15 см", 
+                    "20 см", 
+                    "60 см"
+                ], 
+                correct: 0 
+            },
+            { 
+                q: "8. Зурагт үзүүлсэн цуглуулагч линзийн фокусыг дайран туссан цацраг хугарсны дараа аль замаар тарах вэ?", 
+                svg: `<svg width="180" height="100" viewBox="0 0 180 100">
+                    <line x1="90" y1="10" x2="90" y2="90" stroke="#8b5cf6" stroke-width="2"/>
+                    <path d="M 85 18 L 90 10 L 95 18" stroke="#8b5cf6" stroke-width="2" fill="none"/>
+                    <path d="M 85 82 L 90 90 L 95 82" stroke="#8b5cf6" stroke-width="2" fill="none"/>
+                    
+                    <line x1="10" y1="50" x2="170" y2="50" stroke="gray" stroke-width="1"/>
+                    <circle cx="50" cy="50" r="3" fill="#c4b5fd"/>
+                    <text x="50" y="62" font-size="8" fill="#475569" text-anchor="middle">F1</text>
+                    <circle cx="130" cy="50" r="3" fill="#c4b5fd"/>
+                    <text x="130" y="62" font-size="8" fill="#475569" text-anchor="middle">F2</text>
+                    
+                    <!-- Тусаж буй цацраг F1-ийг дайрна -->
+                    <line x1="20" y1="20" x2="90" y2="60" stroke="#ef4444" stroke-width="2"/>
+                    
+                    <!-- Зам A: Параллель -->
+                    <line x1="90" y1="60" x2="170" y2="60" stroke="#10b981" stroke-width="2"/>
+                    <text x="160" y="55" font-size="9" fill="#10b981" font-weight="bold">A</text>
+                    
+                    <!-- Зам B: Доошоо -->
+                    <line x1="90" y1="60" x2="150" y2="90" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="2,2"/>
+                    <text x="155" y="90" font-size="9" fill="#475569" font-weight="bold">B</text>
+                </svg>`,
+                options: ["A чиглэлээр (Гол оптик тэнхлэгтэй параллель)", "B чиглэлээр (Доошоо хазайж)", "Буцаж ойж нэвтэрнэ", "Шууд чиглэлээ өөрчлөхгүй замаар"], 
+                correct: 0 
+            },
+            { 
+                q: "9. Цуглуулагч линзийн оптикийн хүч ($D$) ба фокусын зай ($F$)-ийн тэмдэг физикт ямар байдаг вэ?", 
+                options: [
+                    "Фокусын зай $F > 0$ (эерэг), Оптикийн хүч $D > 0$ (эерэг)", 
+                    "Фокусын зай $F < 0$ (сөрөг), Оптикийн хүч $D < 0$ (сөрөг)", 
+                    "Фокусын зай нь ямагт 0 байна", 
+                    "Биетийн өндрөөс хамаарч тэмдэг нь солигдоно"
+                ], 
+                correct: 0 
+            },
+            { 
+                q: "10. Холын хараатай (ойрын бараа муу хардаг) хүний нүдний харааг засахад ямар линзтэй нүдний шил ашигладаг вэ?", 
+                options: [
+                    "Цуглуулагч линз", 
+                    "Сарниулагч линз", 
+                    " Хавтгай толь", 
+                    "Призм"
+                ], 
+                correct: 0 
+            }
+        ];
+
+        let userAnswers = new Array(quizQuestions.length).fill(null);
+        let hasSubmittedQuiz = false; 
+
+        function checkAns(qIdx, optIdx, btn) {
+            if (hasSubmittedQuiz) return; 
+            userAnswers[qIdx] = optIdx;
+            const parent = document.getElementById(`q-opts-${qIdx}`);
+            Array.from(parent.children).forEach(child => {
+                child.classList.remove('bg-violet-600', 'text-white', 'border-violet-600');
+                child.classList.add('bg-white', 'text-gray-800');
+            });
+            btn.classList.remove('bg-white', 'text-gray-800');
+            btn.classList.add('bg-violet-600', 'text-white', 'border-violet-600');
+        }
+
+        function calculateScore() {
+            hasSubmittedQuiz = true; 
+            let score = 0;
+            
+            document.getElementById('quizSubmitContainer').classList.add('hidden');
+
+            quizQuestions.forEach((q, qIdx) => {
+                const parent = document.getElementById(`q-opts-${qIdx}`);
+                const children = Array.from(parent.children);
+                const selectedIdx = userAnswers[qIdx];
+                const correctIdx = q.correct;
+
+                children.forEach(child => {
+                    child.classList.remove('bg-violet-600', 'text-white', 'border-violet-600', 'bg-white', 'text-gray-800');
+                    child.classList.add('bg-gray-50', 'text-gray-400', 'border-gray-200');
+                });
+
+                if (selectedIdx === correctIdx) {
+                    score++;
+                    children[correctIdx].classList.remove('bg-gray-50', 'text-gray-400', 'border-gray-200');
+                    children[correctIdx].classList.add('bg-emerald-100', 'text-emerald-800', 'border-emerald-500');
+                    
+                    const checkedBadge = document.createElement('span');
+                    checkedBadge.className = "float-right text-emerald-600 font-bold ml-2 text-sm";
+                    checkedBadge.innerHTML = "&#10004; Зөв";
+                    children[correctIdx].appendChild(checkedBadge);
+                } else {
+                    if (selectedIdx !== null) {
+                        children[selectedIdx].classList.remove('bg-gray-50', 'text-gray-400', 'border-gray-200');
+                        children[selectedIdx].classList.add('bg-rose-100', 'text-rose-800', 'border-rose-500');
+                        
+                        const crossBadge = document.createElement('span');
+                        crossBadge.className = "float-right text-rose-600 font-bold ml-2 text-sm";
+                        crossBadge.innerHTML = "&#10008; Буруу сонголт";
+                        children[selectedIdx].appendChild(crossBadge);
+                    }
+                    
+                    children[correctIdx].classList.remove('bg-gray-50', 'text-gray-400', 'border-gray-200');
+                    children[correctIdx].classList.add('bg-emerald-50', 'text-emerald-700', 'border-emerald-300', 'border-dashed');
+                }
+            });
+
+            const resultDiv = document.getElementById('quiz-result');
+            resultDiv.classList.remove('hidden');
+            let gradeColor = score >= 8 ? 'bg-emerald-50 border-emerald-200' : (score >= 5 ? 'bg-yellow-50 border-yellow-200' : 'bg-rose-50 border-rose-200');
+            let textColor = score >= 8 ? 'text-emerald-800' : (score >= 5 ? 'text-yellow-800' : 'text-rose-800');
+            resultDiv.className = `mt-10 p-10 rounded-3xl text-center shadow-2xl border-4 ${gradeColor}`;
+            resultDiv.innerHTML = `
+                <h2 class="text-3xl font-extrabold ${textColor} mb-4">Таны оноо: ${score} / ${quizQuestions.length}</h2>
+                <p class="text-xl text-gray-600 mb-6">${score === 10 ? "Гайхалтай! Та цуглуулагч линзийн сэдвийг бүрэн эзэмшжээ." : (score >= 5 ? "Сайн байна, дутуугаа дээд талын онолын болон бодлогын хэсгээс дахин бататгаарай!" : "Онолоо дахин уншиж, бодлого болон туршилтыг идэвхтэй ажиллуулаарай.")}</p>
+                <button onclick="location.reload()" class="bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-full font-bold transition-all transform active:scale-95 shadow-md">Дахин эхлэх</button>
+            `;
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function initQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            quizQuestions.forEach((q, idx) => {
+                const div = document.createElement('div');
+                div.className = "p-6 bg-slate-50 rounded-2xl border border-gray-100 shadow-sm";
+                div.innerHTML = `
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold mb-4 text-gray-800">${q.q}</h3>
+                            <div class="grid grid-cols-1 gap-3" id="q-opts-${idx}">
+                                ${q.options.map((opt, i) => `
+                                    <button onclick="checkAns(${idx},${i}, this)" class="text-left px-5 py-3 bg-white border-2 border-gray-100 rounded-xl hover:border-violet-500 transition-all font-medium text-gray-800">
+                                        <span class="inline-block w-8 h-8 rounded-full bg-gray-100 text-center leading-8 mr-3 text-sm font-bold text-gray-500">${String.fromCharCode(65+i)}</span>${opt}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        ${q.svg ? `<div class="flex items-center justify-center bg-white p-4 rounded-xl border border-gray-100 min-w-[220px] shadow-inner">${q.svg}</div>` : ''}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.onload = () => {
+            initQuiz();
+        };
+    </script>
+</body>
+</html>
